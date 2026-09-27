@@ -24,7 +24,12 @@ stream of character crops in reading order, answered against four galleries.
   <img src="project/public/figures/protocols.png" width="95%" alt="The four protocols answer one query stream in reading order and differ in the gallery and whether it may change">
 </p>
 
-<!-- Animated loops of the four protocols and of Re:Cast (the project page's replays) go here. -->
+<p align="center">
+  <img src="docs/media/protocols-loop.gif" width="95%" alt="Eight crops of Bakuman chapter 1 answered by the four protocols in reading order">
+  <br><sub>MagiV2's own decisions on eight crops of Bakuman chapter 1, replayed under each protocol. One Mashiro crop is
+  closer to Azuki's seed: P1 still gets it right, P2 does not, and P4 files it under Azuki, where two later Mashiro crops
+  match it.</sub>
+</p>
 
 | Protocol | Gallery |
 |---|---|
@@ -39,6 +44,12 @@ would add over twenty points of top-1 accuracy. One comparison decides whether a
 gallery pays. **Re:Cast** acts on it with nothing fitted on data: one running average per
 character, grown only where the page vouches for a crop. A memory-augmented encoder serves as
 the maintenance baseline.
+
+<p align="center">
+  <img src="docs/media/recast-loop.gif" width="95%" alt="The same eight crops against growth by top-1 and against Re:Cast">
+  <br><sub>The same stream against two ways of growing the gallery. Growth by top-1 ends at five of eight with three wrong
+  additions; Re:Cast adds only the two crops their page ties to a seed and ends at seven of eight.</sub>
+</p>
 
 <p align="center">
   <img src="project/public/figures/recast_schematic_a.png" width="95%" alt="Re:Cast: a cast sheet of one average per character, commitment only where the page already names the character, and seed expansion">

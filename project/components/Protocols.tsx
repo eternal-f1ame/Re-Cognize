@@ -1,6 +1,6 @@
 import { Section } from "./Section";
-import { Figure } from "./Figure";
-import { PROTOCOLS, PROTOCOLS_FIGURE } from "../content";
+import { ProtocolReplay } from "./replay/ProtocolReplay";
+import { PROTOCOLS } from "../content";
 
 const TONE = {
   blue: { chip: "bg-[var(--blue-soft)] text-[var(--blue)]", bar: "bg-[var(--blue)]" },
@@ -11,7 +11,7 @@ export function Protocols() {
   return (
     <Section id="protocols" index={3} kicker="The framework" title="Four protocols, one stream"
       lead="Every protocol answers the same stream of query crops in reading order; they differ only in the gallery and whether it may change.">
-      <Figure images={[PROTOCOLS_FIGURE]} lead="The four Re:Cognize protocols." caption={PROTOCOLS_FIGURE.caption} />
+      <ProtocolReplay />
       <div className="mx-auto mt-10 grid max-w-[1000px] gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {PROTOCOLS.map((p) => {
           const tone = TONE[p.tone as keyof typeof TONE];
