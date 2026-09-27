@@ -1,0 +1,146 @@
+/* Shared layout for every content section below the hero. */
+
+.section {
+  padding: 4rem 1rem;
+}
+
+.container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--manga-black) 0%, var(--manga-brown) 50%, var(--manga-sepia) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 56rem;
+  margin: 0 auto 3rem;
+  color: var(--manga-brown);
+}
+
+.subheading {
+  font-size: 1.375rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--manga-black);
+  margin: 3.5rem 0 1.5rem;
+}
+
+.prose p {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--manga-black);
+  margin-bottom: 1.25rem;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* Figures */
+.figurePanel {
+  padding: 1rem;
+}
+
+.figureButton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: inherit;
+}
+
+.figureButton + .figureButton {
+  margin-top: 0.75rem;
+}
+
+.figureButton:focus-visible {
+  outline: 3px solid var(--manga-sepia);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.figureImage {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.caption {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--manga-brown);
+  margin-top: 1rem;
+}
+
+.captionLead {
+  font-weight: 700;
+  color: var(--manga-black);
+}
+
+.zoomHint {
+  font-size: 0.75rem;
+  color: var(--manga-sepia);
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+.panelLabel {
+  font-weight: 700;
+  color: var(--manga-black);
+  margin-right: 0.35rem;
+}
+
+/* Cards: left-aligned body text inside the template's centred card */
+.cardBody {
+  text-align: left;
+}
+
+.protocolId {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--manga-black);
+  margin-bottom: 0.25rem;
+}
+
+/* The commit condition */
+.equation {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.75rem;
+  text-align: center;
+  color: var(--manga-black);
+  margin: 1.5rem 0;
+}
+
+/* Resources */
+.linkLabel {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8125rem;
+  color: var(--manga-sepia);
+  word-break: break-all;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 5rem 3rem;
+  }
+}

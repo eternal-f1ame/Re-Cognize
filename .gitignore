@@ -16,5 +16,12 @@ checkpoints/
 results/
 recognize-results.tar.xz
 paper/generated/
+
+# The project page's dependencies and build output
+project/node_modules/
+project/.next/
+project/next-env.d.ts
+project/.vercel/
+project/*.tsbuildinfo
 wandb/
 *.log
