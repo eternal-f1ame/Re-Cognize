@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Section } from "./Section";
+import { Icon } from "./Icon";
 import { BIBTEX } from "../content";
 
 export function Citation() {
@@ -18,25 +19,18 @@ export function Citation() {
   };
 
   return (
-    <Section id="citation" title="Citation" subtitle="If you use Re:Cognize, please cite the paper:">
-      <div className="manga-panel p-6 md:p-8">
-        <div className="flex items-center justify-between mb-6 gap-4">
-          <h3 className="text-xl md:text-2xl font-bold" style={{ color: "var(--manga-black)" }}>📝 BibTeX</h3>
-          <button
-            type="button"
-            onClick={copy}
-            className="inline-flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 manga-panel hover:scale-105"
-            style={{ color: copied ? "#16a34a" : "var(--manga-black)" }}
-          >
-            {copied ? "Copied!" : "Copy"}
+    <Section id="citation" index={8} kicker="Citation" alt title="Cite Re:Cognize">
+      <div className="relative mx-auto max-w-[1000px] overflow-hidden rounded-[10px] border-2 border-[var(--line)] bg-[var(--ink)] shadow-[4px_4px_0_var(--orange)]">
+        <div className="flex items-center justify-between border-b border-white/15 px-4 py-2.5">
+          <span className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--paper-2)]/70">BibTeX</span>
+          <button type="button" onClick={copy}
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-3 py-1 text-xs font-semibold text-[var(--paper)] transition-colors hover:bg-white/10">
+            <Icon name={copied ? "check" : "copy"} size={14} /> {copied ? "Copied" : "Copy"}
           </button>
         </div>
-        <div className="rounded-lg p-4 md:p-6 border-2 border-dashed overflow-x-auto"
-          style={{ backgroundColor: "var(--manga-cream)", borderColor: "var(--manga-brown)" }}>
-          <pre className="text-xs md:text-sm font-mono whitespace-pre-wrap break-words leading-relaxed" style={{ color: "var(--manga-black)" }}>
-            {BIBTEX}
-          </pre>
-        </div>
+        <pre className="overflow-x-auto whitespace-pre-wrap break-words px-4 py-4 font-mono text-[0.8125rem] leading-relaxed text-[var(--paper)] md:whitespace-pre md:px-6 md:text-sm">
+          {BIBTEX}
+        </pre>
       </div>
     </Section>
   );

@@ -1,22 +1,51 @@
+import { Fragment } from "react";
 import { Section } from "./Section";
-import styles from "./styles/Section.module.css";
+import { Icon, type IconName } from "./Icon";
 import { RESOURCES } from "../content";
 
 export function Resources() {
+  const [code, results, ...corpora] = RESOURCES;
   return (
-    <Section id="resources" title="Code, Results and Data"
-      subtitle="Everything needed to rerun an evaluation, or to regenerate every table and figure of the paper without a GPU.">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-        {RESOURCES.map((r) => (
-          <a key={r.title} href={r.href} target="_blank" rel="noopener noreferrer"
-            className="manga-panel manga-universal-card" style={{ textDecoration: "none", display: "block" }}>
-            <div className="manga-card-icon" aria-hidden="true">{r.icon}</div>
-            <h3 className="manga-card-title">{r.title}</h3>
-            <p className={`manga-card-description ${styles.cardBody}`}>{r.text}</p>
-            <span className={styles.linkLabel}>{r.label}</span>
-          </a>
+    <Section id="resources" index={7} kicker="Code & data" title="Rerun it, or regenerate every table"
+      lead="The harness, the per-tuple results and the three corpora. With the results archive, every table and figure of the paper regenerates without a GPU.">
+      <div className="grid gap-5 md:grid-cols-2">
+        {[code, results].map((r, i) => (
+          <ResourceCard key={r.title} {...r} primary={i === 0} />
+        ))}
+      </div>
+      <div className="mt-5 grid gap-5 md:grid-cols-3">
+        {corpora.map((r) => (
+          <ResourceCard key={r.title} {...r} />
         ))}
       </div>
     </Section>
+  );
+}
+
+function ResourceCard({ icon, title, text, href, label, primary = false }: {
+  icon: string;
+  title: string;
+  text: string;
+  href: string;
+  label: string;
+  primary?: boolean;
+}) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className={`panel lift group flex flex-col p-5 no-underline ${primary ? "bg-[var(--ink)] text-[var(--paper)] shadow-[4px_4px_0_var(--orange)] hover:shadow-[6px_7px_0_var(--orange)]" : ""}`}>
+      <div className="flex items-center justify-between">
+        <span className={`grid h-10 w-10 place-items-center rounded-full border-2 ${primary ? "border-[var(--paper)] bg-transparent" : "border-[var(--line)] bg-[var(--blue-soft)]"}`}>
+          <Icon name={(icon === "code" ? "github" : icon) as IconName} size={18} />
+        </span>
+        <Icon name="external" size={18} className="opacity-60 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </div>
+      <h3 className="mt-4 text-lg font-bold">{title}</h3>
+      <p className={`mt-1.5 flex-1 text-sm leading-relaxed ${primary ? "text-[var(--paper-2)]" : "text-[var(--ink-2)]"}`}>{text}</p>
+      <span className={`mt-4 font-mono text-xs [overflow-wrap:anywhere] ${primary ? "text-[var(--orange-soft)]" : "text-[var(--orange)]"}`}>
+        {label.split("/").map((part, i) => (
+          <Fragment key={i}>{i > 0 && <>/<wbr /></>}{part}</Fragment>
+        ))}
+      </span>
+    </a>
   );
 }
