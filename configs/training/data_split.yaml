@@ -1,0 +1,28 @@
+# Series-disjoint POPCharacters split. Test series are touched only by the
+# final evaluation; best.pth is selected on dev.
+train:
+  - "Assassination Classroom"
+  - "Black Clover"
+  - "Bleach"
+  - "Chainsaw Man"
+  - "Death Note"
+  - "Food Wars Shokugeki No Soma"
+  - "Hell S Paradise Jigokuraku"
+  - "Jujutsu Kaisen"
+  - "My Hero Academia"
+  - "Naruto"
+  - "One Piece"
+  - "Spy X Family"
+  - "World Trigger"
+dev:
+  - "Dragon Ball"
+  - "Kuroko S Basketball"
+test:
+  - "Bakuman"
+  - "Demon Slayer Kimetsu No Yaiba"
+  - "Dr Stone"
+  - "Hunter X Hunter"
+  - "Kagurabachi"
+  - "Nisekoi False Love"
+  - "Oshi No Ko"
+  - "Tokyo Ghoul"
