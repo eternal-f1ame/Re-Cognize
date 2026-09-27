@@ -1,12 +1,30 @@
-# Re:Cognize: Open-Set Comic Character Re-Identification
+<h1 align="center">Re:Cognize: Open-Set Comic Character Re-Identification</h1>
 
-Aaditya Baranwal, Madhav Kataria, Shruti Vyas, Yogesh S. Rawat
-NeurIPS 2026, Evaluations and Datasets Track
+<p align="center">
+  <a href="https://sochastic.me">Aaditya Baranwal</a> · Madhav Kataria<sup>*</sup> · Yogesh S. Rawat · Shruti Vyas<br>
+  Institute of Artificial Intelligence, University of Central Florida<br>
+  <sub><sup>*</sup>Work done as an intern at the University of Central Florida.</sub>
+</p>
 
-**Placeholder: link to the paper.**
+<p align="center">
+  <a href="https://re-cognize.vercel.app"><img alt="Project page" src="https://img.shields.io/badge/Project_page-re--cognize.vercel.app-c0662b?style=for-the-badge"></a>
+  <a href="https://neurips.cc/Conferences/2026"><img alt="NeurIPS 2026, Evaluations and Datasets Track" src="https://img.shields.io/badge/NeurIPS_2026-Evaluations_%26_Datasets-36679b?style=for-the-badge"></a>
+  <img alt="Paper: arXiv link coming soon" src="https://img.shields.io/badge/Paper-arXiv_soon-8c8c8c?style=for-the-badge">
+  <a href="https://github.com/eternal-f1ame/Re-Cognize/releases/tag/neurips-2026"><img alt="Results archive" src="https://img.shields.io/badge/Results-23_MB-6d6152?style=for-the-badge"></a>
+</p>
+
+<p align="center">
+  <img src="project/public/figures/teaser.png" width="95%" alt="A reader's question, closed-set Re-ID with a gallery built in advance, and Re:Cognize's four protocols on one query stream">
+</p>
 
 Re:Cognize evaluates comic character re-identification the way a reader meets characters: one
 stream of character crops in reading order, answered against four galleries.
+
+<p align="center">
+  <img src="project/public/figures/protocols.png" width="95%" alt="The four protocols answer one query stream in reading order and differ in the gallery and whether it may change">
+</p>
+
+<!-- Animated loops of the four protocols and of Re:Cast (the project page's replays) go here. -->
 
 | Protocol | Gallery |
 |---|---|
@@ -21,6 +39,11 @@ would add over twenty points of top-1 accuracy. One comparison decides whether a
 gallery pays. **Re:Cast** acts on it with nothing fitted on data: one running average per
 character, grown only where the page vouches for a crop. A memory-augmented encoder serves as
 the maintenance baseline.
+
+<p align="center">
+  <img src="project/public/figures/recast_schematic_a.png" width="95%" alt="Re:Cast: a cast sheet of one average per character, commitment only where the page already names the character, and seed expansion">
+  <img src="project/public/figures/recast_schematic_b.png" width="95%" alt="Over six pages the cast sheet is updated only on the pages that name the character">
+</p>
 
 This repository holds the evaluation harness, the Re:Cast gallery, the memory-block baseline and
 its trainer, the analysis scripts behind every number in the paper, and the generators of its
@@ -90,7 +113,7 @@ python -m pytest tests                    # also builds the real backbones
 ```bibtex
 @inproceedings{baranwal2026recognize,
   title     = {Re:Cognize: Open-Set Comic Character Re-Identification},
-  author    = {Baranwal, Aaditya and Kataria, Madhav and Vyas, Shruti and Rawat, Yogesh S.},
+  author    = {Baranwal, Aaditya and Kataria, Madhav and Rawat, Yogesh S. and Vyas, Shruti},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
   year      = {2026}
 }

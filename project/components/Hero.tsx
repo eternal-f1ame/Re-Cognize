@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Figure } from "./Figure";
 import { Icon } from "./Icon";
-import { AFFILIATIONS, AUTHORS, CODE_URL, PAPER_URL, RESULTS_URL, STATS, TEASER, VENUE } from "../content";
+import { AFFILIATION, AUTHOR_NOTE, AUTHORS, CODE_URL, PAPER_URL, RESULTS_URL, STATS, TEASER, VENUE } from "../content";
 
 export function Hero() {
   const [paperNote, setPaperNote] = useState(false);
@@ -39,17 +39,14 @@ export function Hero() {
               ) : (
                 a.name
               )}
-              <sup className="ml-0.5 text-[var(--muted)]">{a.affiliations.join(",")}</sup>
+              {a.mark && <sup className="ml-0.5 text-[var(--muted)]">{a.mark}</sup>}
               {i < AUTHORS.length - 1 && ","}
             </span>
           )).flatMap((el, i) => (i === 0 ? [el] : [" ", el]))}
         </p>
-        <p className="mt-1.5 text-sm text-[var(--muted)]">
-          {AFFILIATIONS.map((name, i) => (
-            <span key={name} className="mx-2 inline-block">
-              <sup>{i + 1}</sup>{name}
-            </span>
-          ))}
+        <p className="mt-1.5 text-sm text-[var(--muted)]">{AFFILIATION}</p>
+        <p className="mt-1 text-xs text-[var(--muted)]">
+          <sup>{AUTHOR_NOTE.mark}</sup>{AUTHOR_NOTE.text}
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

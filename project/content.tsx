@@ -17,18 +17,20 @@ export const VENUE = {
   url: "https://neurips.cc/Conferences/2026",
 };
 
-export const AUTHORS: { name: string; affiliations: number[]; url?: string }[] = [
-  { name: "Aaditya Baranwal", affiliations: [1], url: "https://sochastic.me" },
-  { name: "Madhav Kataria", affiliations: [1, 2] },
-  { name: "Shruti Vyas", affiliations: [1] },
-  { name: "Yogesh S. Rawat", affiliations: [1] },
+// Author order and affiliation as in the paper; `mark` points to AUTHOR_NOTE.
+export const AUTHORS: { name: string; url?: string; mark?: string }[] = [
+  { name: "Aaditya Baranwal", url: "https://sochastic.me" },
+  { name: "Madhav Kataria", mark: "*" },
+  { name: "Yogesh S. Rawat" },
+  { name: "Shruti Vyas" },
 ];
 
-export const AFFILIATIONS = ["University of Central Florida", "Indian Institute of Technology Jodhpur"];
+export const AFFILIATION = "Institute of Artificial Intelligence, University of Central Florida";
+
+export const AUTHOR_NOTE = { mark: "*", text: "Work done as an intern at the University of Central Florida." };
 
 export const INSTITUTIONS = [
-  { name: "University of Central Florida", logo: "/UCF-logo.png", url: "https://www.ucf.edu" },
-  { name: "Indian Institute of Technology Jodhpur", logo: "/IITJ-logo.png", url: "https://iitj.ac.in" },
+  { unit: "Institute of Artificial Intelligence", name: "University of Central Florida", logo: "/UCF-logo.png", url: "https://ai.ucf.edu" },
 ];
 
 export const NAV = [
@@ -293,7 +295,7 @@ export const RESOURCES = [
 
 export const BIBTEX = `@inproceedings{baranwal2026recognize,
   title     = {Re:Cognize: Open-Set Comic Character Re-Identification},
-  author    = {Baranwal, Aaditya and Kataria, Madhav and Vyas, Shruti and Rawat, Yogesh S.},
+  author    = {Baranwal, Aaditya and Kataria, Madhav and Rawat, Yogesh S. and Vyas, Shruti},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
   year      = {2026}
 }`;
