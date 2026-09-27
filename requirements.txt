@@ -1,0 +1,41 @@
+# Python 3.11, CUDA 12.8. These are the versions the paper's numbers were produced with.
+# Install torch for your CUDA version first if the default wheel does not match it
+# (https://pytorch.org/get-started/locally/), then: pip install -r requirements.txt
+
+# Core
+torch==2.8.0
+torchvision==0.23.0
+timm==1.0.20
+transformers==4.44.2
+safetensors==0.6.2
+numpy==2.2.6
+scipy==1.16.2
+scikit-learn==1.7.2
+networkx==3.5
+Pillow==11.3.0
+PyYAML==6.0.2
+tqdm==4.67.1
+
+# Remote code of the MagiV2 and MagiV3 models on the Hugging Face Hub
+einops==0.8.2
+PuLP==3.3.0
+shapely==2.1.2
+pytorch-metric-learning==2.9.0
+matplotlib==3.10.7
+
+# Instruct-ReID and ReID5o (reid_models/setup.sh)
+clip @ git+https://github.com/openai/CLIP.git
+easydict==1.13
+ftfy==6.3.1
+regex==2026.1.15
+
+# Training: weights download and experiment logging (pass --no-wandb to train without W&B)
+gdown==5.2.1
+wandb==0.24.1
+python-dotenv==1.2.1
+
+# Paper figures and the figure audit
+PyMuPDF==1.28.2
+
+# Tests
+pytest==9.0.2
