@@ -1,12 +1,14 @@
 import { Section } from "./Section";
 import { Figure } from "./Figure";
+import { RecastReplay } from "./replay/RecastReplay";
 import { BINDING_CAPTION, BINDING_FIGURES, RECAST_CAPTION, RECAST_CHANGES, RECAST_FIGURES } from "../content";
 
 export function ReCast() {
   return (
     <Section id="recast" index={5} kicker="Re:Cast" title="A cast that reads along"
       lead="A cast sheet of one running average per character, grown only where the page itself vouches for a crop, with nothing fitted on data.">
-      <Figure images={RECAST_FIGURES} lead="Re:Cast" caption={RECAST_CAPTION} />
+      <RecastReplay />
+      <Figure images={RECAST_FIGURES} lead="Re:Cast" caption={RECAST_CAPTION} className="mt-10" />
       <div className="mx-auto mt-10 grid max-w-[1000px] gap-5 md:grid-cols-3">
         {RECAST_CHANGES.map((c) => (
           <article key={c.title} className="panel p-5">

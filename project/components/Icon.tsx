@@ -1,6 +1,6 @@
 import {
-  ArrowUpRight, BookOpen, Check, Code, Copy, Database, Eye, FileText, Layers, Library, Maximize2, Package, Scale,
-  TriangleAlert, type LucideProps,
+  ArrowUpRight, BookOpen, Check, Code, Copy, Database, Eye, FileText, Layers, Library, Maximize2, Package, Pause, Play,
+  RotateCcw, Scale, TriangleAlert, type LucideProps,
 } from "lucide-react";
 
 const ICONS = {
@@ -18,6 +18,9 @@ const ICONS = {
   check: Check,
   external: ArrowUpRight,
   zoom: Maximize2,
+  play: Play,
+  pause: Pause,
+  restart: RotateCcw,
 };
 
 export type IconName = keyof typeof ICONS | "github";

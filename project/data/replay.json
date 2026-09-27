@@ -1,0 +1,376 @@
+{
+ "encoder": "MagiV2, released encoder",
+ "series": "Bakuman",
+ "chapter": 1,
+ "tau": 0.55,
+ "names": {
+  "T": "Takagi",
+  "M": "Mashiro",
+  "A": "Azuki"
+ },
+ "crops": {
+  "T1": {
+   "src": "/replay/T1.webp",
+   "char": "T",
+   "page": 17
+  },
+  "T2": {
+   "src": "/replay/T2.webp",
+   "char": "T",
+   "page": 25
+  },
+  "M1": {
+   "src": "/replay/M1.webp",
+   "char": "M",
+   "page": 12
+  },
+  "M2": {
+   "src": "/replay/M2.webp",
+   "char": "M",
+   "page": 11
+  },
+  "A1": {
+   "src": "/replay/A1.webp",
+   "char": "A",
+   "page": 50
+  },
+  "q1": {
+   "src": "/replay/q1.webp",
+   "char": "A",
+   "page": 8
+  },
+  "q2": {
+   "src": "/replay/q2.webp",
+   "char": "T",
+   "page": 17
+  },
+  "q3": {
+   "src": "/replay/q3.webp",
+   "char": "M",
+   "page": 25
+  },
+  "q4": {
+   "src": "/replay/q4.webp",
+   "char": "M",
+   "page": 29
+  },
+  "q5": {
+   "src": "/replay/q5.webp",
+   "char": "M",
+   "page": 43
+  },
+  "q6": {
+   "src": "/replay/q6.webp",
+   "char": "T",
+   "page": 44
+  },
+  "q7": {
+   "src": "/replay/q7.webp",
+   "char": "M",
+   "page": 47
+  },
+  "q8": {
+   "src": "/replay/q8.webp",
+   "char": "A",
+   "page": 50
+  }
+ },
+ "stream": [
+  "q1",
+  "q2",
+  "q3",
+  "q4",
+  "q5",
+  "q6",
+  "q7",
+  "q8"
+ ],
+ "gallery": {
+  "p1": [
+   "T1",
+   "T2",
+   "M1",
+   "M2",
+   "A1"
+  ],
+  "seeds": [
+   "T1",
+   "M1",
+   "A1"
+  ]
+ },
+ "steps": [
+  {
+   "q": "q1",
+   "truth": "A",
+   "p1": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.814
+   },
+   "p2": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.814
+   },
+   "p3": {
+    "cluster": 0,
+    "best": null,
+    "open": true
+   },
+   "p4": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.814
+   },
+   "recast": {
+    "pred": "A",
+    "sims": {
+     "T": 0.428,
+     "M": 0.616,
+     "A": 0.814
+    },
+    "commit": null,
+    "via": null
+   }
+  },
+  {
+   "q": "q2",
+   "truth": "T",
+   "p1": {
+    "match": "T1",
+    "pred": "T",
+    "sim": 0.957
+   },
+   "p2": {
+    "match": "T1",
+    "pred": "T",
+    "sim": 0.957
+   },
+   "p3": {
+    "cluster": 1,
+    "best": 0.408,
+    "open": true
+   },
+   "p4": {
+    "match": "T1",
+    "pred": "T",
+    "sim": 0.957
+   },
+   "recast": {
+    "pred": "T",
+    "sims": {
+     "T": 0.957,
+     "M": 0.389,
+     "A": 0.535
+    },
+    "commit": "T",
+    "via": "T1"
+   }
+  },
+  {
+   "q": "q3",
+   "truth": "M",
+   "p1": {
+    "match": "M2",
+    "pred": "M",
+    "sim": 0.934
+   },
+   "p2": {
+    "match": "M1",
+    "pred": "M",
+    "sim": 0.934
+   },
+   "p3": {
+    "cluster": 2,
+    "best": 0.541,
+    "open": true
+   },
+   "p4": {
+    "match": "M1",
+    "pred": "M",
+    "sim": 0.934
+   },
+   "recast": {
+    "pred": "M",
+    "sims": {
+     "T": 0.365,
+     "M": 0.934,
+     "A": 0.562
+    },
+    "commit": null,
+    "via": null
+   }
+  },
+  {
+   "q": "q4",
+   "truth": "M",
+   "p1": {
+    "match": "M2",
+    "pred": "M",
+    "sim": 0.813
+   },
+   "p2": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.769
+   },
+   "p3": {
+    "cluster": 2,
+    "best": 0.763,
+    "open": false
+   },
+   "p4": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.769
+   },
+   "recast": {
+    "pred": "A",
+    "sims": {
+     "T": 0.581,
+     "M": 0.753,
+     "A": 0.769
+    },
+    "commit": null,
+    "via": null
+   }
+  },
+  {
+   "q": "q5",
+   "truth": "M",
+   "p1": {
+    "match": "M1",
+    "pred": "M",
+    "sim": 0.817
+   },
+   "p2": {
+    "match": "M1",
+    "pred": "M",
+    "sim": 0.817
+   },
+   "p3": {
+    "cluster": 2,
+    "best": 0.875,
+    "open": false
+   },
+   "p4": {
+    "match": "q4",
+    "pred": "A",
+    "sim": 0.836
+   },
+   "recast": {
+    "pred": "M",
+    "sims": {
+     "T": 0.562,
+     "M": 0.817,
+     "A": 0.586
+    },
+    "commit": null,
+    "via": null
+   }
+  },
+  {
+   "q": "q6",
+   "truth": "T",
+   "p1": {
+    "match": "T1",
+    "pred": "T",
+    "sim": 0.825
+   },
+   "p2": {
+    "match": "T1",
+    "pred": "T",
+    "sim": 0.825
+   },
+   "p3": {
+    "cluster": 1,
+    "best": 0.778,
+    "open": false
+   },
+   "p4": {
+    "match": "T1",
+    "pred": "T",
+    "sim": 0.825
+   },
+   "recast": {
+    "pred": "T",
+    "sims": {
+     "T": 0.81,
+     "M": 0.52,
+     "A": 0.383
+    },
+    "commit": null,
+    "via": null
+   }
+  },
+  {
+   "q": "q7",
+   "truth": "M",
+   "p1": {
+    "match": "M2",
+    "pred": "M",
+    "sim": 0.854
+   },
+   "p2": {
+    "match": "M1",
+    "pred": "M",
+    "sim": 0.817
+   },
+   "p3": {
+    "cluster": 2,
+    "best": 0.948,
+    "open": false
+   },
+   "p4": {
+    "match": "q4",
+    "pred": "A",
+    "sim": 0.915
+   },
+   "recast": {
+    "pred": "M",
+    "sims": {
+     "T": 0.514,
+     "M": 0.817,
+     "A": 0.694
+    },
+    "commit": null,
+    "via": null
+   }
+  },
+  {
+   "q": "q8",
+   "truth": "A",
+   "p1": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.952
+   },
+   "p2": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.952
+   },
+   "p3": {
+    "cluster": 0,
+    "best": 0.809,
+    "open": false
+   },
+   "p4": {
+    "match": "A1",
+    "pred": "A",
+    "sim": 0.952
+   },
+   "recast": {
+    "pred": "A",
+    "sims": {
+     "T": 0.464,
+     "M": 0.556,
+     "A": 0.952
+    },
+    "commit": "A",
+    "via": "A1"
+   }
+  }
+ ]
+}
