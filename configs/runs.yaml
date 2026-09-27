@@ -1,0 +1,706 @@
+# The training campaign (70 runs).
+# 20 grid runs (5 backbones x {finetuned, memory, lora, memory_lora}, seed 0)
+# + 24 MagiV2/MagiV3 memory ablations at three seeds each, and the seeds their baselines need:
+#   the six TransReID ablations measure a memory worth +0.04 mAP, too small for them to
+#   resolve anything, and MagiV2 and MagiV3 are where the memory works.
+# + 6 TransReID ablations + 20 extra-seed runs: seeds 1 and 2 for every backbone's finetuned and
+#   memory cells. Those two cells carry the headline comparison, and the claim that the memory
+#   trades about a point of P1 Rank-1 for a fraction of a point of mAP sits at only 1.2 to 2.4
+#   times the Rank-1 floor, which one seed cannot establish.
+# gpu_mem_gb is the largest GPU memory a node must advertise (`gmemNN` feature) for the run to
+# be placed there, and it is measured, not guessed: it is the smallest node class on which that
+# backbone and configuration completed. scripts/train.py excludes every node below it, so a
+# 384x384 MagiV3 run cannot land on an 11 GB card and run out of memory mid-training.
+# Recipe values are NOT here: they live in src/recognize/recipe.py. Only per-run deviations
+# appear as extra keys, and scripts/train.py turns each row into one training command.
+runs:
+  - name: transreid_finetuned_seed0
+    backbone: transreid
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 0
+    priority: 1
+    gpu_mem_gb: 11
+    group: grid
+  - name: transreid_memory_seed0
+    backbone: transreid
+    config: memory
+    memory: true
+    lora: false
+    seed: 0
+    priority: 2
+    gpu_mem_gb: 11
+    group: grid
+  - name: transreid_lora_seed0
+    backbone: transreid
+    config: lora
+    memory: false
+    lora: true
+    seed: 0
+    priority: 3
+    gpu_mem_gb: 11
+    group: grid
+  - name: transreid_memory_lora_seed0
+    backbone: transreid
+    config: memory_lora
+    memory: true
+    lora: true
+    seed: 0
+    priority: 4
+    gpu_mem_gb: 11
+    group: grid
+  - name: magiv2_finetuned_seed0
+    backbone: magiv2
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 0
+    priority: 5
+    gpu_mem_gb: 11
+    group: grid
+  - name: magiv2_memory_seed0
+    backbone: magiv2
+    config: memory
+    memory: true
+    lora: false
+    seed: 0
+    priority: 6
+    gpu_mem_gb: 11
+    group: grid
+  - name: magiv2_lora_seed0
+    backbone: magiv2
+    config: lora
+    memory: false
+    lora: true
+    seed: 0
+    priority: 7
+    gpu_mem_gb: 16
+    group: grid
+  - name: magiv2_memory_lora_seed0
+    backbone: magiv2
+    config: memory_lora
+    memory: true
+    lora: true
+    seed: 0
+    priority: 8
+    gpu_mem_gb: 16
+    group: grid
+  - name: magiv3_finetuned_seed0
+    backbone: magiv3
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 0
+    priority: 9
+    gpu_mem_gb: 16
+    group: grid
+  - name: magiv3_memory_seed0
+    backbone: magiv3
+    config: memory
+    memory: true
+    lora: false
+    seed: 0
+    priority: 10
+    gpu_mem_gb: 16
+    group: grid
+  - name: magiv3_lora_seed0
+    backbone: magiv3
+    config: lora
+    memory: false
+    lora: true
+    seed: 0
+    priority: 11
+    gpu_mem_gb: 16
+    group: grid
+  - name: magiv3_memory_lora_seed0
+    backbone: magiv3
+    config: memory_lora
+    memory: true
+    lora: true
+    seed: 0
+    priority: 12
+    gpu_mem_gb: 16
+    group: grid
+  - name: reid5o_finetuned_seed0
+    backbone: reid5o
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 0
+    priority: 13
+    gpu_mem_gb: 11
+    group: grid
+  - name: reid5o_memory_seed0
+    backbone: reid5o
+    config: memory
+    memory: true
+    lora: false
+    seed: 0
+    priority: 14
+    gpu_mem_gb: 11
+    group: grid
+  - name: reid5o_lora_seed0
+    backbone: reid5o
+    config: lora
+    memory: false
+    lora: true
+    seed: 0
+    priority: 15
+    gpu_mem_gb: 11
+    group: grid
+  - name: reid5o_memory_lora_seed0
+    backbone: reid5o
+    config: memory_lora
+    memory: true
+    lora: true
+    seed: 0
+    priority: 16
+    gpu_mem_gb: 11
+    group: grid
+  - name: instructreid_finetuned_seed0
+    backbone: instructreid
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 0
+    priority: 17
+    gpu_mem_gb: 11
+    group: grid
+  - name: instructreid_memory_seed0
+    backbone: instructreid
+    config: memory
+    memory: true
+    lora: false
+    seed: 0
+    priority: 18
+    gpu_mem_gb: 11
+    group: grid
+  - name: instructreid_lora_seed0
+    backbone: instructreid
+    config: lora
+    memory: false
+    lora: true
+    seed: 0
+    priority: 19
+    gpu_mem_gb: 11
+    group: grid
+  - name: instructreid_memory_lora_seed0
+    backbone: instructreid
+    config: memory_lora
+    memory: true
+    lora: true
+    seed: 0
+    priority: 20
+    gpu_mem_gb: 11
+    group: grid
+  - name: transreid_ablation_no_wm_seed0
+    backbone: transreid
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 0
+    priority: 21
+    gpu_mem_gb: 11
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: transreid_ablation_no_em_seed0
+    backbone: transreid
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 0
+    priority: 22
+    gpu_mem_gb: 11
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: transreid_ablation_no_id_drop_seed0
+    backbone: transreid
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 0
+    priority: 23
+    gpu_mem_gb: 11
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: transreid_ablation_no_mem_loss_seed0
+    backbone: transreid
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 0
+    priority: 24
+    gpu_mem_gb: 11
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: transreid_ablation_lora_r4_seed0
+    backbone: transreid
+    config: ablation_lora_r4
+    memory: true
+    lora: true
+    seed: 0
+    priority: 25
+    gpu_mem_gb: 11
+    group: ablation
+    note: "LoRA rank 4"
+    lora_rank: 4
+  - name: transreid_ablation_lora_r16_seed0
+    backbone: transreid
+    config: ablation_lora_r16
+    memory: true
+    lora: true
+    seed: 0
+    priority: 26
+    gpu_mem_gb: 11
+    group: ablation
+    note: "LoRA rank 16"
+    lora_rank: 16
+  - name: transreid_finetuned_seed1
+    backbone: transreid
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 1
+    priority: 27
+    gpu_mem_gb: 11
+    group: seed
+  - name: transreid_finetuned_seed2
+    backbone: transreid
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 2
+    priority: 28
+    gpu_mem_gb: 11
+    group: seed
+  - name: transreid_memory_seed1
+    backbone: transreid
+    config: memory
+    memory: true
+    lora: false
+    seed: 1
+    priority: 29
+    gpu_mem_gb: 11
+    group: seed
+  - name: transreid_memory_seed2
+    backbone: transreid
+    config: memory
+    memory: true
+    lora: false
+    seed: 2
+    priority: 30
+    gpu_mem_gb: 11
+    group: seed
+  - name: magiv2_finetuned_seed1
+    backbone: magiv2
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 1
+    priority: 31
+    gpu_mem_gb: 11
+    group: seed
+  - name: magiv2_finetuned_seed2
+    backbone: magiv2
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 2
+    priority: 32
+    gpu_mem_gb: 11
+    group: seed
+  - name: magiv2_memory_seed1
+    backbone: magiv2
+    config: memory
+    memory: true
+    lora: false
+    seed: 1
+    priority: 33
+    gpu_mem_gb: 11
+    group: seed
+  - name: magiv2_memory_seed2
+    backbone: magiv2
+    config: memory
+    memory: true
+    lora: false
+    seed: 2
+    priority: 34
+    gpu_mem_gb: 11
+    group: seed
+  - name: magiv3_memory_seed1
+    backbone: magiv3
+    config: memory
+    memory: true
+    lora: false
+    seed: 1
+    priority: 35
+    gpu_mem_gb: 16
+    group: seed
+  - name: magiv3_memory_seed2
+    backbone: magiv3
+    config: memory
+    memory: true
+    lora: false
+    seed: 2
+    priority: 36
+    gpu_mem_gb: 16
+    group: seed
+  - name: magiv2_ablation_no_wm_seed0
+    backbone: magiv2
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 0
+    priority: 37
+    gpu_mem_gb: 11
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: magiv2_ablation_no_wm_seed1
+    backbone: magiv2
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 1
+    priority: 38
+    gpu_mem_gb: 11
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: magiv2_ablation_no_wm_seed2
+    backbone: magiv2
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 2
+    priority: 39
+    gpu_mem_gb: 11
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: magiv2_ablation_no_em_seed0
+    backbone: magiv2
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 0
+    priority: 40
+    gpu_mem_gb: 11
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: magiv2_ablation_no_em_seed1
+    backbone: magiv2
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 1
+    priority: 41
+    gpu_mem_gb: 11
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: magiv2_ablation_no_em_seed2
+    backbone: magiv2
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 2
+    priority: 42
+    gpu_mem_gb: 11
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: magiv2_ablation_no_id_drop_seed0
+    backbone: magiv2
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 0
+    priority: 43
+    gpu_mem_gb: 11
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: magiv2_ablation_no_id_drop_seed1
+    backbone: magiv2
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 1
+    priority: 44
+    gpu_mem_gb: 11
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: magiv2_ablation_no_id_drop_seed2
+    backbone: magiv2
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 2
+    priority: 45
+    gpu_mem_gb: 11
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: magiv2_ablation_no_mem_loss_seed0
+    backbone: magiv2
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 0
+    priority: 46
+    gpu_mem_gb: 11
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: magiv2_ablation_no_mem_loss_seed1
+    backbone: magiv2
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 1
+    priority: 47
+    gpu_mem_gb: 11
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: magiv2_ablation_no_mem_loss_seed2
+    backbone: magiv2
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 2
+    priority: 48
+    gpu_mem_gb: 11
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: magiv3_ablation_no_wm_seed0
+    backbone: magiv3
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 0
+    priority: 49
+    gpu_mem_gb: 16
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: magiv3_ablation_no_wm_seed1
+    backbone: magiv3
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 1
+    priority: 50
+    gpu_mem_gb: 16
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: magiv3_ablation_no_wm_seed2
+    backbone: magiv3
+    config: ablation_no_wm
+    memory: true
+    lora: false
+    seed: 2
+    priority: 51
+    gpu_mem_gb: 16
+    group: ablation
+    note: "working memory off"
+    no_working_memory: true
+  - name: magiv3_ablation_no_em_seed0
+    backbone: magiv3
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 0
+    priority: 52
+    gpu_mem_gb: 16
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: magiv3_ablation_no_em_seed1
+    backbone: magiv3
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 1
+    priority: 53
+    gpu_mem_gb: 16
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: magiv3_ablation_no_em_seed2
+    backbone: magiv3
+    config: ablation_no_em
+    memory: true
+    lora: false
+    seed: 2
+    priority: 54
+    gpu_mem_gb: 16
+    group: ablation
+    note: "episodic memory off"
+    no_episodic_memory: true
+  - name: magiv3_ablation_no_id_drop_seed0
+    backbone: magiv3
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 0
+    priority: 55
+    gpu_mem_gb: 16
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: magiv3_ablation_no_id_drop_seed1
+    backbone: magiv3
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 1
+    priority: 56
+    gpu_mem_gb: 16
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: magiv3_ablation_no_id_drop_seed2
+    backbone: magiv3
+    config: ablation_no_id_drop
+    memory: true
+    lora: false
+    seed: 2
+    priority: 57
+    gpu_mem_gb: 16
+    group: ablation
+    note: "ID-drop rho=0"
+    episodic_id_drop_rate: 0.0
+  - name: magiv3_ablation_no_mem_loss_seed0
+    backbone: magiv3
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 0
+    priority: 58
+    gpu_mem_gb: 16
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: magiv3_ablation_no_mem_loss_seed1
+    backbone: magiv3
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 1
+    priority: 59
+    gpu_mem_gb: 16
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: magiv3_ablation_no_mem_loss_seed2
+    backbone: magiv3
+    config: ablation_no_mem_loss
+    memory: true
+    lora: false
+    seed: 2
+    priority: 60
+    gpu_mem_gb: 16
+    group: ablation
+    note: "memory-consistency term off"
+    memory_weight: 0.0
+  - name: magiv3_finetuned_seed1
+    backbone: magiv3
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 1
+    priority: 61
+    gpu_mem_gb: 16
+    group: seed
+  - name: magiv3_finetuned_seed2
+    backbone: magiv3
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 2
+    priority: 62
+    gpu_mem_gb: 16
+    group: seed
+  - name: instructreid_finetuned_seed1
+    backbone: instructreid
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 1
+    priority: 63
+    gpu_mem_gb: 11
+    group: seed
+  - name: instructreid_finetuned_seed2
+    backbone: instructreid
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 2
+    priority: 64
+    gpu_mem_gb: 11
+    group: seed
+  - name: instructreid_memory_seed1
+    backbone: instructreid
+    config: memory
+    memory: true
+    lora: false
+    seed: 1
+    priority: 65
+    gpu_mem_gb: 11
+    group: seed
+  - name: instructreid_memory_seed2
+    backbone: instructreid
+    config: memory
+    memory: true
+    lora: false
+    seed: 2
+    priority: 66
+    gpu_mem_gb: 11
+    group: seed
+  - name: reid5o_finetuned_seed1
+    backbone: reid5o
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 1
+    priority: 67
+    gpu_mem_gb: 11
+    group: seed
+  - name: reid5o_finetuned_seed2
+    backbone: reid5o
+    config: finetuned
+    memory: false
+    lora: false
+    seed: 2
+    priority: 68
+    gpu_mem_gb: 11
+    group: seed
+  - name: reid5o_memory_seed1
+    backbone: reid5o
+    config: memory
+    memory: true
+    lora: false
+    seed: 1
+    priority: 69
+    gpu_mem_gb: 11
+    group: seed
+  - name: reid5o_memory_seed2
+    backbone: reid5o
+    config: memory
+    memory: true
+    lora: false
+    seed: 2
+    priority: 70
+    gpu_mem_gb: 11
+    group: seed
