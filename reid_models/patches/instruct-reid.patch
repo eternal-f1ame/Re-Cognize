@@ -1,0 +1,92 @@
+diff --git a/reid/models/backbone/pass_vit.py b/reid/models/backbone/pass_vit.py
+--- a/reid/models/backbone/pass_vit.py
++++ b/reid/models/backbone/pass_vit.py
+@@ -431,7 +431,9 @@
+     return model
+ 
+ def vit_small_patch16_224_TransReID(img_size=(256, 128), stride_size=16, drop_path_rate=0.1, camera=0, view=0, local_feature=False, sie_xishu=1.5, **kwargs):
+-    model = TransReID(img_size=img_size, patch_size=16, stride_size=stride_size, embed_dim=384, depth=12, num_heads=6, mlp_ratio=4, qkv_bias=True,drop_path_rate=drop_path_rate, camera=camera, view=view, sie_xishu=sie_xishu, local_feature=local_feature,  **kwargs)
++    # Extract patch_size from kwargs if provided, default to 16
++    patch_size = kwargs.pop('patch_size', 16)
++    model = TransReID(img_size=img_size, patch_size=patch_size, stride_size=stride_size, embed_dim=384, depth=12, num_heads=6, mlp_ratio=4, qkv_bias=True,drop_path_rate=drop_path_rate, camera=camera, view=view, sie_xishu=sie_xishu, local_feature=local_feature,  **kwargs)
+     model.in_planes = 384
+     return model
+ 
+diff --git a/reid/models/pass_transformer_joint.py b/reid/models/pass_transformer_joint.py
+--- a/reid/models/pass_transformer_joint.py
++++ b/reid/models/pass_transformer_joint.py
+@@ -313,13 +313,14 @@
+             self.text_width = self.text_encoder.config.hidden_size
+             
+         else:
+-            self.base = deit_small_patch16_224_TransReID(patch_size=net_config.patch_size_bio, stride_size=net_config.stride_size_bio,)
++            self.base = vit_small_patch16_224_TransReID(patch_size=net_config.patch_size_bio, stride_size=net_config.stride_size_bio,)
+ 
+         if net_config.vit_type=='base':
+             self.in_planes = 768
+             self.num_features = 768
+         else:
+             self.in_planes = 384
++            self.num_features = 384
+         self.temp = nn.Parameter(torch.ones([]) * 0.07)
+         self.num_classes = num_classes
+         self.vision_proj = nn.Linear(768, 256)
+@@ -329,10 +330,14 @@
+         self.feat_fusion = 'cat'
+         self.neck_feat = 'before'
+         self.momentum = 0.995
+-        self.model_pairs = [[self.text_encoder, self.text_encoder_m],
+-                            [self.text_proj, self.text_proj_m],
+-                            ]
+-        self.copy_params()
++        # Only set up model pairs for text encoders if vit_type is 'base'
++        if net_config.vit_type=='base':
++            self.model_pairs = [[self.text_encoder, self.text_encoder_m],
++                                [self.text_proj, self.text_proj_m],
++                                ]
++            self.copy_params()
++        else:
++            self.model_pairs = []
+         self.project = nn.Linear(768, 768, bias=False)
+ 
+         if self.net_config.fusion_loss=='all':
+@@ -357,9 +362,11 @@
+             self.classifier_c = nn.Linear(self.num_features, num_classes, bias=False)
+             init.normal_(self.classifier_c.weight, std=0.001)
+         
+-        self.itm_head = nn.Linear(self.text_width, 2)
+-        self.prd_head = nn.Linear(self.text_width, 2)
+-        self.mrtd_head = nn.Linear(self.text_width, 2)
++        # Text heads only needed for base model with joint training
++        if net_config.vit_type=='base':
++            self.itm_head = nn.Linear(self.text_width, 2)
++            self.prd_head = nn.Linear(self.text_width, 2)
++            self.mrtd_head = nn.Linear(self.text_width, 2)
+         
+         self.register_buffer("image_queue", torch.randn(256, 65536))
+         self.register_buffer("text_queue", torch.randn(256, 65536))
+@@ -374,7 +381,9 @@
+             if net_config.attn_type=='fc':
+                 fusion_layers.append(torch.nn.Linear(self.num_features*2, self.num_features*2))
+             else:
+-                fusion_layers.append(copy.deepcopy(self.visual_encoder.blocks[-i]))
++                # Use visual_encoder for base, base for other types
++                encoder = self.visual_encoder if net_config.vit_type=='base' else self.base
++                fusion_layers.append(copy.deepcopy(encoder.blocks[-i]))
+         self.fusion = nn.Sequential(*fusion_layers)
+         
+     def dual_attn(self, bio_feats, clot_feats, project_feats=None, project_feats_down=None):
+diff --git a/reid/models/xbert.py b/reid/models/xbert.py
+--- a/reid/models/xbert.py
++++ b/reid/models/xbert.py
+@@ -47,8 +47,8 @@
+     SequenceClassifierOutput,
+     TokenClassifierOutput,
+ )
+-from transformers.modeling_utils import (
+-    PreTrainedModel,
++from transformers.modeling_utils import PreTrainedModel
++from transformers.pytorch_utils import (
+     apply_chunking_to_forward,
+     find_pruneable_heads_and_indices,
+     prune_linear_layer,
