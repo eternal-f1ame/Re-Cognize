@@ -1,127 +1,112 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import styles from "./styles/Hero.module.css";
-import { AFFILIATIONS, AUTHORS, CODE_URL, PAPER_URL, RESULTS_URL, TAGLINE, TEASER, VENUE } from "../content";
-
-const buttonStyle = {
-  padding: "0.75rem 1.5rem",
-  fontSize: "0.875rem",
-  fontWeight: 700,
-  color: "var(--manga-black)",
-  textDecoration: "none",
-  transition: "transform 300ms",
-  display: "inline-block",
-} as const;
+import { useState } from "react";
+import { Figure } from "./Figure";
+import { Icon } from "./Icon";
+import { AFFILIATIONS, AUTHORS, CODE_URL, PAPER_URL, RESULTS_URL, STATS, TEASER, VENUE } from "../content";
 
 export function Hero() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [showPaperNote, setShowPaperNote] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const [paperNote, setPaperNote] = useState(false);
 
   return (
-    <section className={styles.hero}>
-      <div className={`${styles.container} ${isVisible ? styles.containerVisible : styles.containerHidden}`}>
-        <div className={styles.logoTitleContainer}>
-          <div className={styles.logoContainer}>
-            <div className={styles.logoWrapper}>
-              <div className={styles.logoGlow}></div>
-              <div className={styles.logoImage}>
-                <Image src="/comic-icons/icon6.png" alt="" width={120} height={120} className={styles.logo} />
-              </div>
-            </div>
-          </div>
-          <h1 className={styles.title}>
-            <span className={styles.titleMain}>Re:Cognize</span>
-            <span className={styles.titleSub}>Open-Set Comic Character Re-Identification</span>
-          </h1>
-        </div>
+    <header id="top" className="relative overflow-hidden border-b-2 border-[var(--line)]">
+      <div className="halftone halftone-fade pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-[0.08]" aria-hidden="true" />
+      <div className="relative mx-auto max-w-6xl px-4 pb-12 pt-8 text-center sm:px-6 md:pt-10">
+        <a
+          href={VENUE.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border-2 border-[var(--line)] bg-[var(--card)] px-3.5 py-1 text-xs font-semibold shadow-[var(--shadow-sm)] sm:text-sm"
+        >
+          <span className="h-2 w-2 rounded-full bg-[var(--orange)]" aria-hidden="true" />
+          {VENUE.label}
+        </a>
 
-        <div className={styles.conferenceInfo}>
-          <p className={styles.conferenceTitle}>
-            <a href={VENUE.url} target="_blank" rel="noopener noreferrer">{VENUE.name}</a>
-          </p>
-          <p className={styles.conferenceSubTitle}>
-            <a href={VENUE.trackUrl} target="_blank" rel="noopener noreferrer">{VENUE.track}</a>
-          </p>
-          <p className={styles.conferenceDetails}>{VENUE.details}</p>
-        </div>
+        <h1 className="mt-5 text-[clamp(2.75rem,6.5vw,4.5rem)] font-extrabold leading-[0.95]">
+          Re<span className="text-[var(--orange)]">:</span>Cognize
+        </h1>
+        <p className="mt-3 font-display text-[clamp(1.125rem,2.3vw,1.625rem)] font-semibold leading-snug text-[var(--ink-2)]">
+          Open-Set Comic Character <span className="whitespace-nowrap">Re-Identification</span>
+        </p>
 
-        <div className={styles.authorsContainer}>
-          <p className={styles.authorsMain}>
-            {AUTHORS.map((a, i) => (
-              <span key={a.name}>
-                {a.url ? (
-                  <a href={a.url} target="_blank" rel="noopener noreferrer" className={styles.authorName}>{a.name}</a>
-                ) : (
-                  <span className={styles.authorName}>{a.name}</span>
-                )}
-                <sup>{a.affiliations.join(",")}</sup>
-                {i < AUTHORS.length - 1 ? ", " : ""}
-              </span>
-            ))}
-          </p>
-          <div className={styles.affiliations}>
-            <p className={styles.affiliationsText}>
-              {AFFILIATIONS.map((name, i) => (
-                <span key={name}>
-                  <sup>{i + 1}</sup>{name}{i < AFFILIATIONS.length - 1 ? "  ||  " : ""}
-                </span>
-              ))}
-            </p>
-          </div>
-        </div>
+        <p className="mt-5 text-base font-semibold sm:text-lg">
+          {AUTHORS.map((a, i) => (
+            <span key={a.name} className="whitespace-nowrap">
+              {a.url ? (
+                <a href={a.url} target="_blank" rel="noopener noreferrer" className="underline decoration-[var(--orange)] decoration-2 underline-offset-4 hover:text-[var(--orange)]">
+                  {a.name}
+                </a>
+              ) : (
+                a.name
+              )}
+              <sup className="ml-0.5 text-[var(--muted)]">{a.affiliations.join(",")}</sup>
+              {i < AUTHORS.length - 1 && ","}
+            </span>
+          )).flatMap((el, i) => (i === 0 ? [el] : [" ", el]))}
+        </p>
+        <p className="mt-1.5 text-sm text-[var(--muted)]">
+          {AFFILIATIONS.map((name, i) => (
+            <span key={name} className="mx-2 inline-block">
+              <sup>{i + 1}</sup>{name}
+            </span>
+          ))}
+        </p>
 
-        <div className={styles.buttonsContainer} style={{ marginBottom: "2.5rem" }}>
-          <div className={styles.readPaperWrapper}>
-            {PAPER_URL ? (
-              <a href={PAPER_URL} target="_blank" rel="noopener noreferrer" className="manga-panel" style={buttonStyle}>
-                📄 Paper
-              </a>
-            ) : (
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          {PAPER_URL ? (
+            <a href={PAPER_URL} target="_blank" rel="noopener noreferrer" className="btn">
+              <Icon name="paper" size={17} /> Paper
+            </a>
+          ) : (
+            <span className="relative">
               <span
-                className={`manga-panel ${styles.buttonDisabled}`}
-                style={buttonStyle}
+                className="btn btn-disabled"
                 aria-disabled="true"
                 tabIndex={0}
-                onMouseEnter={() => setShowPaperNote(true)}
-                onMouseLeave={() => setShowPaperNote(false)}
-                onFocus={() => setShowPaperNote(true)}
-                onBlur={() => setShowPaperNote(false)}
+                onMouseEnter={() => setPaperNote(true)}
+                onMouseLeave={() => setPaperNote(false)}
+                onFocus={() => setPaperNote(true)}
+                onBlur={() => setPaperNote(false)}
               >
-                📄 Paper
+                <Icon name="paper" size={17} /> Paper
               </span>
-            )}
-            {!PAPER_URL && showPaperNote && <div className={styles.comingSoonPopup}>arXiv link coming soon</div>}
-          </div>
-          <a href={CODE_URL} target="_blank" rel="noopener noreferrer" className="manga-panel" style={buttonStyle}>
-            💻 Code
+              {paperNote && (
+                <span className="absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-[var(--ink)] px-2.5 py-1 text-xs text-[var(--paper)]">
+                  arXiv link coming soon
+                </span>
+              )}
+            </span>
+          )}
+          <a href={CODE_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            <Icon name="github" size={17} /> Code
           </a>
-          <a href={RESULTS_URL} target="_blank" rel="noopener noreferrer" className="manga-panel" style={buttonStyle}>
-            📦 Results
+          <a href={RESULTS_URL} target="_blank" rel="noopener noreferrer" className="btn">
+            <Icon name="package" size={17} /> Results
+          </a>
+          <a href="#citation" className="btn">
+            <Icon name="book" size={17} /> BibTeX
           </a>
         </div>
 
-        <div className="manga-panel" style={{ padding: "1rem", width: "100%", maxWidth: "80rem", margin: "0 auto 2rem" }}>
-          <p className={styles.descriptionText}>{TAGLINE}</p>
-          <div className={styles.imageContainer}>
-            <Image
-              src={TEASER.src}
-              alt={TEASER.alt}
-              width={TEASER.width}
-              height={TEASER.height}
-              sizes="(min-width: 1280px) 1200px, 100vw"
-              className={styles.teaserImage}
-              priority
-            />
-          </div>
-          <p className={styles.teaserCaption}>{TEASER.caption}</p>
-        </div>
+        <Figure
+          images={[TEASER]}
+          lead={TEASER.lead}
+          caption={TEASER.caption}
+          priority
+          max="max-w-[900px]"
+          className="mt-8 text-left"
+        />
+
+        <dl className="mx-auto mt-10 grid max-w-[900px] grid-cols-2 gap-3 text-left sm:gap-4 md:grid-cols-4">
+          {STATS.map((s) => (
+            <div key={s.label} className="panel-flat px-4 py-3">
+              <dt className="sr-only">{s.label}</dt>
+              <dd className="font-display text-3xl font-extrabold leading-none text-[var(--ink)]">{s.value}</dd>
+              <dd className="mt-1.5 text-[0.8125rem] leading-snug text-[var(--muted)]">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
-    </section>
+    </header>
   );
 }
