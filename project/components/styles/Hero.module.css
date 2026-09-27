@@ -1,0 +1,499 @@
+/* Hero Component Styles */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  max-width: 80rem; /* max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: all 1000ms;
+}
+
+.containerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.containerHidden {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+/* Logo and Title Container */
+.logoTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: nowrap;
+  padding: 0 1rem;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Logo Section */
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0; /* Remove bottom margin since it's now inline */
+}
+
+.logoWrapper {
+  position: relative;
+  --group: 1;
+}
+
+.logoWrapper:hover .logoGlow {
+  opacity: 0.75;
+}
+
+.logoGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  filter: blur(3rem);
+  opacity: 0.5;
+  transition: opacity 300ms;
+  background: linear-gradient(135deg, var(--manga-brown), var(--manga-sepia));
+}
+
+.logoImage {
+  position: relative;
+  animation: manga-zoom 2s ease-in-out infinite;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+/* Title Section: the name on one line, the task under it */
+.titleMain {
+  display: block;
+  font-size: 2.25rem;
+  letter-spacing: -0.01em;
+}
+
+.titleSub {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.title {
+  font-size: 0.9375rem; /* half of text-3xl */
+  font-weight: 900;
+  margin-bottom: 0;
+  line-height: 1.25;
+  background: linear-gradient(135deg, var(--manga-black) 0%, var(--manga-brown) 50%, var(--manga-sepia) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 0 1 auto;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 40rem;
+}
+
+/* Conference Info */
+.conferenceInfo {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.conferenceTitle {
+  font-size: 1.0625rem;
+  margin-bottom: 0.1rem;
+  color: var(--manga-sepia);
+}
+
+.conferenceTitle a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+
+.conferenceTitle a:hover {
+  color: var(--manga-black);
+  transform: translateY(-2px) scale(1.05);
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.conferenceSubTitle {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--manga-sepia);
+}
+
+.conferenceSubTitle a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+
+.conferenceSubTitle a:hover {
+  color: var(--manga-black);
+  transform: translateY(-2px) scale(1.05);
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.conferenceDetails {
+  font-size: 0.75rem;
+  color: var(--manga-brown);
+}
+
+/* Badges Section */
+.badgesContainer {
+  margin-bottom: 1.5rem;
+}
+
+.badgesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.badgeEmoji {
+  margin-right: 0.5rem;
+}
+
+/* Authors Section */
+.authorsContainer {
+  margin-bottom: 0.5rem;
+  color: var(--manga-brown);
+}
+
+.authorsMain {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.authorsSecondary {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.authorName {
+  font-weight: 700;
+}
+
+.affiliations {
+  font-size: 0.75rem;
+  color: var(--manga-sepia);
+}
+
+.affiliationsText {
+  word-break: break-words;
+}
+
+/* Buttons Section */
+.buttonsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.15rem;
+  margin-top: 0rem;
+}
+
+/* Read Paper Button Wrapper */
+.readPaperWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Coming Soon Popup */
+.comingSoonPopup {
+  position: absolute;
+  top: -3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--manga-black);
+  color: var(--manga-cream);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: popupFadeIn 0.2s ease-out;
+}
+
+.comingSoonPopup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--manga-black);
+}
+
+/* Image Specific Styles */
+.descriptionText {
+  font-size: 1rem;
+  line-height: 1.625;
+  margin-bottom: 1rem;
+  color: var(--manga-black);
+}
+
+.imageContainer {
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.teaserImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .logoTitleContainer {
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+    flex-wrap: nowrap;
+  }
+  
+  .logo {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  .title {
+    font-size: 1.125rem; /* half of text-4xl */
+    white-space: normal;
+    max-width: 40rem;
+  }
+  
+  .badgesList {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .descriptionPanel {
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .descriptionText {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .imageContainer {
+    margin-top: 1.5rem;
+  }
+  
+  .authorsContainer {
+    margin-bottom: 3rem;
+  }
+  
+  .authorsMain {
+    font-size: 1.125rem;
+  }
+  
+  .authorsSecondary {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+  
+  .affiliations {
+    font-size: 0.875rem;
+  }
+  
+  .buttonsContainer {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .logoTitleContainer {
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .logo {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .title {
+    font-size: 1.5rem; /* half of text-5xl */
+    max-width: none;
+  }
+  
+  .badgesList {
+    gap: 1.5rem;
+  }
+  
+  .descriptionPanel {
+    padding: 2rem;
+  }
+  
+  .descriptionText {
+    font-size: 1.25rem;
+  }
+  
+  .imageContainer {
+    margin-top: 2rem;
+  }
+  
+  .buttonsContainer {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  
+  .logoTitleContainer {
+    gap: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .logo {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  
+  .title {
+    font-size: 1.875rem; /* half of text-6xl */
+  }
+  
+  .buttonsContainer {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  
+  .logoTitleContainer {
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .logo {
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  .title {
+    font-size: 2.25rem; /* half of text-7xl */
+  }
+  
+  .buttonsContainer {
+    gap: 2rem;
+  }
+}
+
+/* Animations */
+@keyframes manga-zoom {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes popupFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .titleMain { font-size: 3.5rem; }
+  .titleSub { font-size: 1.5rem; }
+}
+
+@media (min-width: 1280px) {
+  .titleMain { font-size: 4.25rem; }
+  .titleSub { font-size: 1.75rem; }
+}
+
+/* Paper button while the arXiv link is not set */
+.buttonDisabled {
+  opacity: 0.55;
+  cursor: not-allowed !important;
+}
+
+.teaserCaption {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--manga-brown);
+  text-align: left;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .conferenceTitle { font-size: 1.5rem; }
+}

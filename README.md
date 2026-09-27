@@ -37,6 +37,7 @@ analysis/            the analyses behind the paper's numbers (Re:Cast, binding, 
 paper/               generators of the paper's tables and figures
 docs/                protocols.md (the specification) and reproducing.md (every command)
 tests/               unit and regression tests
+project/             the project page (Next.js)
 ```
 
 ## Setup
