@@ -8,9 +8,12 @@ export function Footer() {
         <div className="flex flex-wrap items-center justify-center gap-6">
           {INSTITUTIONS.map((inst) => (
             <a key={inst.name} href={inst.url} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-3 text-sm font-semibold text-[var(--ink-2)] hover:text-[var(--ink)]">
+              className="flex items-center gap-3 text-left text-sm font-semibold text-[var(--ink-2)] hover:text-[var(--ink)]">
               <Image src={inst.logo} alt="" width={400} height={400} className="h-10 w-10 object-contain" />
-              {inst.name}
+              <span className="flex flex-col leading-tight">
+                <span className="text-xs font-medium text-[var(--muted)]">{inst.unit}</span>
+                {inst.name}
+              </span>
             </a>
           ))}
         </div>

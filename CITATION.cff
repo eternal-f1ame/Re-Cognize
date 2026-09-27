@@ -4,25 +4,34 @@ title: "Re:Cognize: Open-Set Comic Character Re-Identification"
 authors:
   - family-names: Baranwal
     given-names: Aaditya
+    affiliation: "Institute of Artificial Intelligence, University of Central Florida"
   - family-names: Kataria
     given-names: Madhav
-  - family-names: Vyas
-    given-names: Shruti
+    affiliation: "Institute of Artificial Intelligence, University of Central Florida"
   - family-names: Rawat
     given-names: Yogesh S.
+    affiliation: "Institute of Artificial Intelligence, University of Central Florida"
+  - family-names: Vyas
+    given-names: Shruti
+    affiliation: "Institute of Artificial Intelligence, University of Central Florida"
 license: MIT
 repository-code: "https://github.com/eternal-f1ame/Re-Cognize"
+url: "https://re-cognize.vercel.app"
 preferred-citation:
   type: conference-paper
   title: "Re:Cognize: Open-Set Comic Character Re-Identification"
   authors:
     - family-names: Baranwal
       given-names: Aaditya
+      affiliation: "Institute of Artificial Intelligence, University of Central Florida"
     - family-names: Kataria
       given-names: Madhav
-    - family-names: Vyas
-      given-names: Shruti
+      affiliation: "Institute of Artificial Intelligence, University of Central Florida"
     - family-names: Rawat
       given-names: Yogesh S.
+      affiliation: "Institute of Artificial Intelligence, University of Central Florida"
+    - family-names: Vyas
+      given-names: Shruti
+      affiliation: "Institute of Artificial Intelligence, University of Central Florida"
   collection-title: "Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track"
   year: 2026
