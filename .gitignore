@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+
+# Data, third-party code and weights are fetched locally (see Datasets/README.md, reid_models/README.md)
+Datasets/*
+!Datasets/README.md
+reid_models/Instruct-ReID-main/
+reid_models/ReID5o/
+reid_models/weights/*
+!reid_models/weights/SHA256SUMS
+
+# Outputs: checkpoints, results (or the unpacked results archive), generated paper artefacts
+checkpoints/
+results/
+recognize-results.tar.xz
+paper/generated/
+wandb/
+*.log

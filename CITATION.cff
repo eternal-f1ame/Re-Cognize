@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper."
+title: "Re:Cognize: Open-Set Comic Character Re-Identification"
+authors:
+  - family-names: Baranwal
+    given-names: Aaditya
+  - family-names: Kataria
+    given-names: Madhav
+  - family-names: Vyas
+    given-names: Shruti
+  - family-names: Rawat
+    given-names: Yogesh S.
+license: MIT
+repository-code: "https://github.com/eternal-f1ame/Re-Cognize"
+preferred-citation:
+  type: conference-paper
+  title: "Re:Cognize: Open-Set Comic Character Re-Identification"
+  authors:
+    - family-names: Baranwal
+      given-names: Aaditya
+    - family-names: Kataria
+      given-names: Madhav
+    - family-names: Vyas
+      given-names: Shruti
+    - family-names: Rawat
+      given-names: Yogesh S.
+  collection-title: "Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track"
+  year: 2026
