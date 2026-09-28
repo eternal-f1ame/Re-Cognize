@@ -22,45 +22,49 @@ const PANELS: { id: PanelId; tag: string; title: string; tone: "blue" | "orange"
   { id: "p4", tag: "P4", title: "grows by top-1", tone: "orange" },
 ];
 
-// Panel coordinates (every panel is PW x PH)
+// Panel coordinates (every panel is PW x PH). The query waits at the left, beside the gallery it is
+// matched against, so a panel is short and the four sit side by side on one screen.
 const PW = 244;
-const PH = 452;
-const ROW_Y = [68, 134, 200];            // top of each character's row of crops
-const ROW_X = 82;
-const ROW_S = 0.6;                       // gallery crops: 36 x 48
-const SLOT = { x: (PW - 0.9 * TW) / 2, y: 276, s: 0.9 };
-const TEXT_Y = 376;
-const SCORE_Y = PH - 22;
-const CL = { w: 106, h: 86, s: 0.45 };  // P3 cluster boxes
+const PH = 250;
+const ROW_Y = [44, 92, 140];             // top of each character's row of crops
+const DOT_X = 74;                        // the row's colour, named in the legend under the stage
+const ROW_X = 86;
+const ROW_S = 0.52;                      // gallery crops: 31 x 42
+const SLOT = { x: 12, y: 78, s: 0.8 };   // the query as it is decided: 48 x 64
+const TEXT_Y = 207;
+const SCORE_Y = 239;
+const CL = { w: 80, h: 66, s: 0.4 };     // P3 cluster boxes and their members (24 x 32)
 
 type Layout = { w: number; h: number; stream: StreamGeom; py: number; px: number[]; shown: PanelId[] };
 const WIDE: Layout = {
-  w: 1000, h: 150 + PH + 6, py: 150, px: [0, 252, 504, 756], shown: ["p1", "p2", "p3", "p4"],
-  stream: { x0: 95, dx: 108, y: 30, s: 0.9, pages: true, label: true },
+  w: 1000, h: 96 + PH + 4, py: 96, px: [0, 252, 504, 756], shown: ["p1", "p2", "p3", "p4"],
+  stream: { x0: 89.4, dx: 112, y: 18, s: 0.62, pages: true, label: true },
 };
 const narrow = (p: PanelId): Layout => ({
-  w: 264, h: 78 + PH + 6, py: 78, px: [10], shown: [p],
-  stream: { x0: 12, dx: 30.4, y: 14, s: 0.44, pages: false, label: false },
+  w: 264, h: 46 + PH + 4, py: 46, px: [10], shown: [p],
+  stream: { x0: 11.5, dx: 31, y: 6, s: 0.4, pages: false, label: false },
 });
+// The card shares the screen with the section header, its own controls and the caption.
+const FIT = { max: 1080, reserve: 236 };
 
 const steps = R.steps;
 const name = (c: Char) => R.names[c];
 const truth = (k: number) => steps[k].truth;
 
 function rowX(j: number, n: number) {
-  const room = PW - 12 - ROW_S * TW - ROW_X;
-  const step = n > 1 ? Math.min(42, room / (n - 1)) : 0;
+  const room = PW - 10 - ROW_S * TW - ROW_X;
+  const step = n > 1 ? Math.min(37, room / (n - 1)) : 0;
   return ROW_X + j * step;
 }
 
 function clusterBox(c: number) {
-  return { x: 12 + (c % 2) * 114, y: 74 + Math.floor(c / 2) * 96 };
+  return { x: 70 + (c % 2) * 86, y: 42 + Math.floor(c / 2) * 72 };
 }
 
 function clusterMemberX(c: number, m: number, n: number) {
-  const room = CL.w - 16 - CL.s * TW;
-  const step = n > 1 ? Math.min(31, room / (n - 1)) : 0;
-  return clusterBox(c).x + 8 + m * step;
+  const room = CL.w - 12 - CL.s * TW;
+  const step = n > 1 ? Math.min(18, room / (n - 1)) : 0;
+  return clusterBox(c).x + 6 + m * step;
 }
 
 const center = (x: number, y: number, s: number) => ({ x: x + (TW * s) / 2, y: y + (TH * s) / 2 });
@@ -117,12 +121,7 @@ export function ProtocolReplay() {
     // character rows (P1, P2, P4)
     if (p !== "p3") {
       CHARS.forEach((c, r) => {
-        els.push(
-          <g key={`lbl-${c}`}>
-            <circle cx={16} cy={ROW_Y[r] + 24} r={5} fill={COLOR[c]} />
-            <text x={26} y={ROW_Y[r] + 28.5} fontSize={12.5} fontWeight={600} fill={INK}>{name(c)}</text>
-          </g>,
-        );
+        els.push(<circle key={`lbl-${c}`} cx={DOT_X} cy={ROW_Y[r] + 21} r={4.5} fill={COLOR[c]} />);
       });
       const rows = p === "p4" ? CHARS.map((c) => R.gallery.seeds.filter((s) => R.crops[s].char === c)) : staticRows(p);
       rows.forEach((row, r) => {
@@ -132,20 +131,15 @@ export function ProtocolReplay() {
         });
       });
     } else {
-      els.push(
-        <text key="rule" x={PW / 2} y={62} textAnchor="middle" fontSize={11.5} fill={MUTED}>
-          joins a cluster if similarity ≥ {R.tau.toFixed(2)}
-        </text>,
-      );
       const n = Math.max(0, ...steps.map((s) => s.p3.cluster)) + 1;
       for (let c = 0; c < n; c++) {
         const opener = steps.findIndex((s) => s.p3.cluster === c);
         const box = clusterBox(c);
         els.push(
           <g key={`cl-${c}`} className="rp-fade" style={{ opacity: at(opener) >= VERDICT ? 1 : 0 }}>
-            <rect x={box.x} y={box.y} width={CL.w} height={CL.h} rx={9} fill="#fff" stroke={TONE.orange.stroke}
-              strokeWidth={1.6} strokeDasharray="4 3" />
-            <text x={box.x + 8} y={box.y + 14} fontSize={10.5} fontWeight={600} fill={MUTED}>cluster {c + 1}</text>
+            <rect x={box.x} y={box.y} width={CL.w} height={CL.h} rx={8} fill="#fff" stroke={TONE.orange.stroke}
+              strokeWidth={1.5} strokeDasharray="4 3" />
+            <text x={box.x + 6} y={box.y + 13} fontSize={9.5} fontWeight={600} fill={MUTED}>cluster {c + 1}</text>
           </g>,
         );
       }
@@ -185,14 +179,14 @@ export function ProtocolReplay() {
       const members = R.stream.filter((_, j) => at(j) >= FILE && steps[j].p3.cluster === c);
       const box = clusterBox(c);
       els.push(<Tile key={`q-${q}`} crop={q} clip={clip} x={clusterMemberX(c, members.indexOf(q), members.length)}
-        y={box.y + 24} s={CL.s} frame={COLOR[truth(k)]} />);
+        y={box.y + 22} s={CL.s} frame={COLOR[truth(k)]} />);
     });
 
     // the current query's match, verdict and decision
     let line: ReactNode = null;
     if (cur >= 0 && a >= DEAL && a !== Infinity) {
       const s = steps[cur];
-      const from = { x: SLOT.x + (TW * SLOT.s) / 2, y: SLOT.y - 2 };
+      const from = { x: SLOT.x + TW * SLOT.s + 2, y: SLOT.y + (TH * SLOT.s) / 2 };
       if (p !== "p3") {
         const m = s[p];
         const t = tilePos(p, m.match, cur);
@@ -201,24 +195,24 @@ export function ProtocolReplay() {
           <rect key={`halo-${cur}`} x={t.x - 3.5} y={t.y - 3.5} width={TW * t.s + 7} height={TH * t.s + 7} rx={8} fill="none"
             stroke={m.pred === s.truth ? INK : WRONG} strokeWidth={2.6} className="rp-fade"
             style={{ opacity: a >= MATCH && a < FILE ? 1 : 0 }} />,
-          <Link key={`link-${cur}`} x1={from.x} y1={from.y} x2={c.x} y2={c.y + (TH * t.s) / 2 + 2}
+          <Link key={`link-${cur}`} x1={from.x} y1={from.y} x2={t.x - 2} y2={c.y}
             drawn={a >= MATCH} visible={a < FILE} color={a >= VERDICT && m.pred !== s.truth ? WRONG : INK} />,
-          <Badge key={`badge-${cur}`} x={SLOT.x + TW * SLOT.s - 2} y={SLOT.y + 2} ok={m.pred === s.truth} show={a >= VERDICT && a < FILE} />,
+          <Badge key={`badge-${cur}`} x={SLOT.x + TW * SLOT.s - 3} y={SLOT.y + 3} ok={m.pred === s.truth} show={a >= VERDICT && a < FILE} />,
         );
         const ok = m.pred === s.truth;
         let msg = a >= VERDICT ? (ok ? `matched ${name(m.pred)}` : `matched ${name(m.pred)}, not ${name(s.truth)}`) : `top-1 similarity ${m.sim.toFixed(2)}`;
         if (p === "p4" && a >= FILE) msg = ok ? `filed under ${name(m.pred)}` : `filed under ${name(m.pred)}, wrongly`;
-        line = a >= MATCH ? <text x={PW / 2} y={TEXT_Y} textAnchor="middle" fontSize={12.5} fontWeight={a >= VERDICT ? 700 : 500}
+        line = a >= MATCH ? <text x={PW / 2} y={TEXT_Y} textAnchor="middle" fontSize={11.5} fontWeight={a >= VERDICT ? 700 : 500}
           fill={a >= VERDICT && !ok ? WRONG : INK}>{msg}</text> : null;
       } else {
         const d = s.p3;
         if (!d.open && a >= MATCH && a < FILE) {
           const box = clusterBox(d.cluster);
-          els.push(<Link key={`link-${cur}`} x1={from.x} y1={from.y} x2={box.x + CL.w / 2} y2={box.y + CL.h} drawn={a >= MATCH} visible={a < FILE} />);
+          els.push(<Link key={`link-${cur}`} x1={from.x} y1={from.y} x2={box.x - 2} y2={box.y + CL.h / 2} drawn={a >= MATCH} visible={a < FILE} />);
         }
         const cmp = d.best === null ? "nothing to compare with yet" : `closest cluster ${d.best.toFixed(2)} ${d.best >= R.tau ? "≥" : "<"} ${R.tau.toFixed(2)}`;
         const msg = a >= VERDICT ? (d.open ? "opens a new cluster" : `joins cluster ${d.cluster + 1}`) : cmp;
-        line = a >= MATCH ? <text x={PW / 2} y={TEXT_Y} textAnchor="middle" fontSize={12.5} fontWeight={a >= VERDICT ? 700 : 500}
+        line = a >= MATCH ? <text x={PW / 2} y={TEXT_Y} textAnchor="middle" fontSize={11.5} fontWeight={a >= VERDICT ? 700 : 500}
           fill={INK}>{msg}</text> : null;
       }
     }
@@ -241,11 +235,12 @@ export function ProtocolReplay() {
 
     return (
       <>
-        <PanelFrame w={PW} h={PH} tag={meta.tag} title={meta.title} tone={meta.tone} />
+        <PanelFrame w={PW} h={PH} tag={meta.tag} title={meta.title} tone={meta.tone}
+          note={p === "p3" ? `joins at ≥ ${R.tau.toFixed(2)}` : undefined} />
         {els}
         {line}
-        <line x1={14} x2={PW - 14} y1={SCORE_Y - 22} y2={SCORE_Y - 22} stroke="#e6ded0" strokeWidth={1.5} strokeDasharray="3 4" />
-        <text x={PW / 2} y={SCORE_Y} textAnchor="middle" fontSize={13.5} fontWeight={800} fill={INK} className="rp-display">{score}</text>
+        <line x1={12} x2={PW - 12} y1={SCORE_Y - 17} y2={SCORE_Y - 17} stroke="#e6ded0" strokeWidth={1.5} strokeDasharray="3 4" />
+        <text x={PW / 2} y={SCORE_Y} textAnchor="middle" fontSize={12.5} fontWeight={800} fill={INK} className="rp-display">{score}</text>
       </>
     );
   }
@@ -260,6 +255,8 @@ export function ProtocolReplay() {
         tabs={isNarrow ? (
           <Tabs items={PANELS.map((p) => ({ id: p.id, label: p.tag }))} value={tab} onChange={setTab} />
         ) : undefined}
+        ratio={L.w / L.h}
+        fit={FIT}
         stage={(
           <svg viewBox={`0 0 ${L.w} ${L.h}`} className="rp-svg block h-auto w-full" role="img"
             aria-label="Eight crops of Bakuman chapter 1 answered by the four protocols in reading order: P1 gets all eight right, P2 seven, P4 five after filing one mistake under the wrong character, and P3 opens three clusters.">
@@ -280,17 +277,17 @@ export function ProtocolReplay() {
         beats={steps.length}
         status={status}
         extra={(
-          <button type="button" onClick={() => setFigure(true)} className="btn !px-3 !py-1.5 !text-sm">
-            <Icon name="zoom" size={15} /> Paper figure
+          <button type="button" onClick={() => setFigure(true)} className="btn btn-sm !gap-1.5 !px-2.5 !py-1 !text-[0.8125rem]">
+            <Icon name="zoom" size={14} /> Paper figure
           </button>
         )}
         lead="One stream, four galleries."
         caption={(
           <>
-            MagiV2&rsquo;s own decisions (its released encoder) on eight crops of Bakuman chapter 1, in reading order,
-            against the galleries of the paper&rsquo;s protocols figure; the protocols themselves run on whole chapters.
-            The Mashiro crop on page 29 sits closer to Azuki&rsquo;s seed than to Mashiro&rsquo;s. P1, which holds a second
-            Mashiro crop, gets it right and P2 does not; P4 files it under Azuki, and two later Mashiro crops match it there.
+            MagiV2&rsquo;s own decisions (its released encoder) on eight crops of Bakuman chapter 1, against the
+            galleries of the paper&rsquo;s protocols figure; the protocols run on whole chapters. The page-29 Mashiro crop
+            sits closer to Azuki&rsquo;s seed: P1 still gets it right, P2 does not, and P4 files it under Azuki, where two
+            later Mashiro crops match it.
           </>
         )}
       />

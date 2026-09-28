@@ -240,10 +240,10 @@ export const BINDING_CAPTION =
   "commit condition predicts a positive Δ, and τ is chosen by that prediction, never by the measured gain.";
 
 export const HEADROOM_PANELS = [
-  { src: "/figures/ceiling_recovery.svg", label: "a", caption: "What one seed recovers, by metric." },
-  { src: "/figures/p4_closes_gap.svg", label: "b", caption: "What correct growth would add, k = 1." },
-  { src: "/figures/adaptation.svg", label: "c", caption: "Encoder-side adaptation, three training runs." },
-  { src: "/figures/one_breakeven.svg", label: "d", caption: "Every gallery operation at k = 5, against the gallery it starts from." },
+  { src: "/figures/ceiling_recovery.svg", label: "a", caption: "What one seed recovers, by metric" },
+  { src: "/figures/p4_closes_gap.svg", label: "b", caption: "What correct growth adds, k = 1" },
+  { src: "/figures/adaptation.svg", label: "c", caption: "Encoder-side adaptation" },
+  { src: "/figures/one_breakeven.svg", label: "d", caption: "Every change to the gallery, k = 5" },
 ];
 
 export const HEADROOM_CAPTION =
