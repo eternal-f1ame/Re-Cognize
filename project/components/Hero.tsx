@@ -11,25 +11,25 @@ export function Hero() {
   return (
     <header id="top" className="relative overflow-hidden border-b-2 border-[var(--line)]">
       <div className="halftone halftone-fade pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-[0.08]" aria-hidden="true" />
-      <div className="relative mx-auto max-w-6xl px-4 pb-12 pt-8 text-center sm:px-6 md:pt-10">
+      <div className="relative mx-auto max-w-6xl px-4 pb-9 pt-5 text-center sm:px-6 md:pt-6">
         <a
           href={VENUE.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border-2 border-[var(--line)] bg-[var(--card)] px-3.5 py-1 text-xs font-semibold shadow-[var(--shadow-sm)] sm:text-sm"
+          className="inline-flex items-center gap-2 rounded-full border-2 border-[var(--line)] bg-[var(--card)] px-3 py-0.5 text-xs font-semibold shadow-[var(--shadow-sm)] sm:text-[0.8125rem]"
         >
           <span className="h-2 w-2 rounded-full bg-[var(--orange)]" aria-hidden="true" />
           {VENUE.label}
         </a>
 
-        <h1 className="mt-5 text-[clamp(2.75rem,6.5vw,4.5rem)] font-extrabold leading-[0.95]">
+        <h1 className="mt-3 text-[clamp(2.375rem,5vw,3.625rem)] font-extrabold leading-[0.95]">
           Re<span className="text-[var(--orange)]">:</span>Cognize
         </h1>
-        <p className="mt-3 font-display text-[clamp(1.125rem,2.3vw,1.625rem)] font-semibold leading-snug text-[var(--ink-2)]">
+        <p className="mt-1.5 font-display text-[clamp(1.0625rem,1.8vw,1.375rem)] font-semibold leading-snug text-[var(--ink-2)]">
           Open-Set Comic Character <span className="whitespace-nowrap">Re-Identification</span>
         </p>
 
-        <p className="mt-5 text-base font-semibold sm:text-lg">
+        <p className="mt-3 text-[0.9688rem] font-semibold sm:text-base">
           {AUTHORS.map((a, i) => (
             <span key={a.name} className="whitespace-nowrap">
               {a.url ? (
@@ -44,20 +44,20 @@ export function Hero() {
             </span>
           )).flatMap((el, i) => (i === 0 ? [el] : [" ", el]))}
         </p>
-        <p className="mt-1.5 text-sm text-[var(--muted)]">{AFFILIATION}</p>
-        <p className="mt-1 text-xs text-[var(--muted)]">
+        <p className="mt-1 text-[0.8125rem] text-[var(--muted)]">{AFFILIATION}</p>
+        <p className="mt-0.5 text-[0.6875rem] text-[var(--muted)]">
           <sup>{AUTHOR_NOTE.mark}</sup>{AUTHOR_NOTE.text}
         </p>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
           {PAPER_URL ? (
-            <a href={PAPER_URL} target="_blank" rel="noopener noreferrer" className="btn">
+            <a href={PAPER_URL} target="_blank" rel="noopener noreferrer" className="btn btn-sm">
               <Icon name="paper" size={17} /> Paper
             </a>
           ) : (
             <span className="relative">
               <span
-                className="btn btn-disabled"
+                className="btn btn-sm btn-disabled"
                 aria-disabled="true"
                 tabIndex={0}
                 onMouseEnter={() => setPaperNote(true)}
@@ -74,13 +74,13 @@ export function Hero() {
               )}
             </span>
           )}
-          <a href={CODE_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+          <a href={CODE_URL} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-primary">
             <Icon name="github" size={17} /> Code
           </a>
-          <a href={RESULTS_URL} target="_blank" rel="noopener noreferrer" className="btn">
+          <a href={RESULTS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-sm">
             <Icon name="package" size={17} /> Results
           </a>
-          <a href="#citation" className="btn">
+          <a href="#citation" className="btn btn-sm">
             <Icon name="book" size={17} /> BibTeX
           </a>
         </div>
@@ -90,11 +90,11 @@ export function Hero() {
           lead={TEASER.lead}
           caption={TEASER.caption}
           priority
-          max="max-w-[900px]"
-          className="mt-8 text-left"
+          fit={{ max: 880, reserve: 344 }}
+          className="mt-5 text-left"
         />
 
-        <dl className="mx-auto mt-10 grid max-w-[900px] grid-cols-2 gap-3 text-left sm:gap-4 md:grid-cols-4">
+        <dl className="mx-auto mt-8 grid max-w-[880px] grid-cols-2 gap-3 text-left sm:gap-4 md:grid-cols-4">
           {STATS.map((s) => (
             <div key={s.label} className="panel-flat px-4 py-3">
               <dt className="sr-only">{s.label}</dt>

@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode, type RefObject } from "react";
 import data from "../../data/replay.json";
 import { Icon } from "../Icon";
+import { fitStyle, type Fit } from "../fit";
 import type { Clock } from "./useLoop";
 
 // ---------------------------------------------------------------- data (written by scripts/make_replay.py)
@@ -127,7 +128,7 @@ export function StreamStrip({ g, clip, clock, at }: {
   return (
     <g>
       {g.label && (
-        <text x={g.x0} y={g.y - 12} className="rp-mono" fontSize={10.5} letterSpacing="0.12em" fill={MUTED}>
+        <text x={g.x0} y={g.y - 7} className="rp-mono" fontSize={10} letterSpacing="0.12em" fill={MUTED}>
           {`ONE QUERY STREAM · ${R.series.toUpperCase()} CH. ${R.chapter} · READING ORDER →`}
         </text>
       )}
@@ -137,7 +138,7 @@ export function StreamStrip({ g, clip, clock, at }: {
           <g key={q}>
             <Tile crop={q} clip={clip} x={streamX(g, k)} y={g.y} s={g.s} frame={GREY} opacity={done ? 0.38 : 1} width={1.6} />
             {g.pages && (
-              <text x={streamX(g, k) + w / 2} y={g.y + h + 15} textAnchor="middle" fontSize={11}
+              <text x={streamX(g, k) + w / 2} y={g.y + h + 12.5} textAnchor="middle" fontSize={10.5}
                 fontWeight={k === clock.beat ? 700 : 400} fill={k === clock.beat ? INK : MUTED}>
                 p. {R.crops[q].page}
               </text>
@@ -145,24 +146,29 @@ export function StreamStrip({ g, clip, clock, at }: {
           </g>
         );
       })}
-      <g className="rp-move" style={{ transform: `translate(${streamX(g, cur) - 4}px, ${g.y - 4}px)`, opacity: clock.beat < 0 ? 0 : 1 }}>
-        <rect width={w + 8} height={h + 8} rx={8} fill="none" stroke={TONE.orange.stroke} strokeWidth={2.6} />
+      <g className="rp-move" style={{ transform: `translate(${streamX(g, cur) - 3.5}px, ${g.y - 3.5}px)`, opacity: clock.beat < 0 ? 0 : 1 }}>
+        <rect width={w + 7} height={h + 7} rx={7} fill="none" stroke={TONE.orange.stroke} strokeWidth={2.4} />
       </g>
     </g>
   );
 }
 
-// A panel's header chip and body, in panel coordinates.
-export function PanelFrame({ w, h, tag, title, tone }: { w: number; h: number; tag: string; title: string; tone: keyof typeof TONE }) {
+// A panel's header chip and body, in panel coordinates; `note` sits at the chip's right end.
+export const HEAD_H = 28;
+export const BODY_Y = 34;
+export function PanelFrame({ w, h, tag, title, tone, note }: {
+  w: number; h: number; tag: string; title: string; tone: keyof typeof TONE; note?: string;
+}) {
   const t = TONE[tone];
   const dark = tone === "ink";
   return (
     <g>
-      <rect x={3} y={45} width={w} height={h - 42} rx={11} fill={INK} />
-      <rect x={0} y={42} width={w} height={h - 42} rx={11} fill={CARD} stroke={INK} strokeWidth={2} />
-      <rect x={0} y={0} width={w} height={34} rx={9} fill={t.fill} stroke={t.stroke} strokeWidth={2} />
-      <text x={12} y={22.5} fontSize={14} fontWeight={800} fill={dark ? "#f6e4d5" : t.stroke} className="rp-display">{tag}</text>
-      <text x={12 + tag.length * 9.6 + 8} y={22.5} fontSize={13.5} fontWeight={600} fill={dark ? "#faf7f0" : INK}>{title}</text>
+      <rect x={3} y={BODY_Y + 3} width={w} height={h - BODY_Y} rx={10} fill={INK} />
+      <rect x={0} y={BODY_Y} width={w} height={h - BODY_Y} rx={10} fill={CARD} stroke={INK} strokeWidth={2} />
+      <rect x={0} y={0} width={w} height={HEAD_H} rx={8} fill={t.fill} stroke={t.stroke} strokeWidth={2} />
+      <text x={11} y={19} fontSize={13} fontWeight={800} fill={dark ? "#f6e4d5" : t.stroke} className="rp-display">{tag}</text>
+      <text x={11 + tag.length * 8.9 + 7} y={19} fontSize={12.5} fontWeight={600} fill={dark ? "#faf7f0" : INK}>{title}</text>
+      {note && <text x={w - 10} y={19} textAnchor="end" fontSize={10.5} fill={dark ? "#d9cfbf" : MUTED}>{note}</text>}
     </g>
   );
 }
@@ -179,11 +185,14 @@ export function useNarrow(ref: RefObject<HTMLElement | null>, below = 620) {
   return narrow;
 }
 
-// The card around a loop: optional tabs (narrow screens show one panel), the stage, the controls and the caption.
-export function ReplayCard({ cardRef, tabs, stage, playing, onToggle, onRestart, clock, beats, status, extra, lead, caption }: {
+// The card around a loop: optional tabs (narrow screens show one panel), the stage, the controls and
+// the caption. It is as wide as lets the stage (aspect `ratio`) and `fit.reserve` px fit the screen.
+export function ReplayCard({ cardRef, tabs, stage, ratio, fit, playing, onToggle, onRestart, clock, beats, status, extra, lead, caption }: {
   cardRef: RefObject<HTMLDivElement | null>;
   tabs?: ReactNode;
   stage: ReactNode;
+  ratio: number;
+  fit: Fit;
   playing: boolean;
   onToggle: () => void;
   onRestart: () => void;
@@ -194,17 +203,18 @@ export function ReplayCard({ cardRef, tabs, stage, playing, onToggle, onRestart,
   lead: string;
   caption: ReactNode;
 }) {
+  const small = "btn btn-sm !gap-1.5 !px-2.5 !py-1 !text-[0.8125rem]";
   return (
-    <figure className="mx-auto w-full max-w-[1000px]">
-      <div ref={cardRef} className="figure-card !p-3 sm:!p-4">
+    <figure className="fit-h" style={fitStyle(ratio, fit)}>
+      <div ref={cardRef} className="figure-card !p-2.5 sm:!p-3" data-fit-unit="">
         {tabs}
         {stage}
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 border-t-2 border-dashed border-[var(--paper-2)] pt-3">
-          <button type="button" onClick={onToggle} className="btn !px-3 !py-1.5 !text-sm" aria-label={playing ? "Pause the animation" : "Play the animation"}>
-            <Icon name={playing ? "pause" : "play"} size={15} /> {playing ? "Pause" : "Play"}
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t-2 border-dashed border-[var(--paper-2)] pt-2">
+          <button type="button" onClick={onToggle} className={small} aria-label={playing ? "Pause the animation" : "Play the animation"}>
+            <Icon name={playing ? "pause" : "play"} size={14} /> {playing ? "Pause" : "Play"}
           </button>
-          <button type="button" onClick={onRestart} className="btn !px-3 !py-1.5 !text-sm" aria-label="Restart the animation">
-            <Icon name="restart" size={15} /> Restart
+          <button type="button" onClick={onRestart} className={small} aria-label="Restart the animation">
+            <Icon name="restart" size={14} /> Restart
           </button>
           <div className="flex items-center gap-1.5" aria-hidden="true">
             {Array.from({ length: beats }, (_, k) => (
@@ -213,10 +223,18 @@ export function ReplayCard({ cardRef, tabs, stage, playing, onToggle, onRestart,
             ))}
           </div>
           <span className="font-mono text-xs text-[var(--muted)]" aria-live="off">{status}</span>
+          <span className="flex items-center gap-2.5 text-xs font-semibold text-[var(--ink-2)]">
+            {CHARS.map((c) => (
+              <span key={c} className="flex items-center gap-1">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: COLOR[c] }} aria-hidden="true" />
+                {R.names[c]}
+              </span>
+            ))}
+          </span>
           {extra && <span className="ml-auto">{extra}</span>}
         </div>
       </div>
-      <figcaption className="figure-caption mt-3 px-1">
+      <figcaption className="figure-caption mt-2.5 px-1">
         <strong>{lead} </strong>
         {caption}
       </figcaption>
@@ -231,7 +249,7 @@ export function Tabs<T extends string>({ items, value, onChange }: {
   onChange: (v: T) => void;
 }) {
   return (
-    <div role="tablist" className="mb-2 flex gap-1.5">
+    <div role="tablist" className="mb-1.5 flex gap-1.5">
       {items.map((it) => (
         <button key={it.id} type="button" role="tab" aria-selected={value === it.id} onClick={() => onChange(it.id)}
           className={`flex-1 rounded-md border-2 border-[var(--line)] px-2 py-1 text-xs font-bold transition-colors ${

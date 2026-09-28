@@ -4,22 +4,23 @@ import { useCallback, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { ImagePopup, type ZoomImage } from "./ImagePopup";
 import { Icon } from "./Icon";
+import { fitStyle, stackRatio, type Fit } from "./fit";
 
 // One or more stacked images in a figure card, with a caption; each image opens full screen on click.
-export function Figure({ images, lead, caption, priority = false, max = "max-w-[1000px]", className = "" }: {
+export function Figure({ images, lead, caption, priority = false, fit, className = "" }: {
   images: ZoomImage[];
   lead?: string;
   caption?: ReactNode;
   priority?: boolean;
-  max?: string;
+  fit: Fit;
   className?: string;
 }) {
   const [open, setOpen] = useState<ZoomImage | null>(null);
   const close = useCallback(() => setOpen(null), []);
 
   return (
-    <figure className={`mx-auto w-full ${max} ${className}`}>
-      <div className="figure-card">
+    <figure className={`fit-h ${className}`} style={fitStyle(stackRatio(images), fit)}>
+      <div className="figure-card" data-fit-unit="">
         {images.map((img, i) => (
           <button
             key={img.src}
@@ -33,7 +34,7 @@ export function Figure({ images, lead, caption, priority = false, max = "max-w-[
               alt={img.alt}
               width={img.width}
               height={img.height}
-              sizes="(min-width: 1040px) 1000px, 100vw"
+              sizes={`(min-width: ${fit.max + 40}px) ${fit.max}px, 100vw`}
               className="h-auto w-full rounded-md"
               priority={priority}
               unoptimized={img.src.endsWith(".svg")}
@@ -45,7 +46,7 @@ export function Figure({ images, lead, caption, priority = false, max = "max-w-[
         ))}
       </div>
       {(lead || caption) && (
-        <figcaption className="figure-caption mt-3 px-1">
+        <figcaption className="figure-caption mt-2.5 px-1">
           {lead && <strong>{lead} </strong>}
           {caption}
         </figcaption>
