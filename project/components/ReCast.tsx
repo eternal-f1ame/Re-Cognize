@@ -20,18 +20,22 @@ export function ReCast() {
       <div data-fit-row="" className="mt-8 grid items-start gap-x-[2.5vw] gap-y-6 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)]">
         <Figure images={RECAST_FIGURES} lead="Re:Cast" caption={RECAST_CAPTION} fit={SCHEMATIC_FIT}
           sizes="(min-width: 64rem) 66vw, 100vw" />
-        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
-          {RECAST_CHANGES.map((c) => (
-            <article key={c.title} className="panel p-4">
-              <div className="flex items-center gap-3">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-[var(--line)] bg-[var(--orange)] font-display text-sm font-extrabold text-[var(--paper)]">
-                  {c.label}
-                </span>
-                <h3 className="text-base font-bold leading-snug">{c.title}</h3>
-              </div>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--ink-2)]">{c.text}</p>
-            </article>
-          ))}
+        {/* the column stretches to the row's height and the cards stick under the nav while the schematic
+            scrolls past, as the abstract's scope note does */}
+        <div className="lg:self-stretch">
+          <div className="grid gap-4 md:grid-cols-3 lg:sticky lg:top-[calc(var(--nav-h)+1.5rem)] lg:grid-cols-1">
+            {RECAST_CHANGES.map((c) => (
+              <article key={c.title} className="panel p-4">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-[var(--line)] bg-[var(--orange)] font-display text-sm font-extrabold text-[var(--paper)]">
+                    {c.label}
+                  </span>
+                  <h3 className="text-base font-bold leading-snug">{c.title}</h3>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-2)]">{c.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
 
