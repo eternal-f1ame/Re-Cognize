@@ -4,7 +4,7 @@ import { CODE_URL, INSTITUTIONS, RESULTS_URL } from "../content";
 export function Footer() {
   return (
     <footer className="border-t-2 border-[var(--line)]">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-10 sm:px-6 md:flex-row md:justify-between">
+      <div className="page flex flex-col items-center gap-6 py-[clamp(1.5rem,5vh,2.5rem)] md:flex-row md:justify-between">
         <div className="flex flex-wrap items-center justify-center gap-6">
           {INSTITUTIONS.map((inst) => (
             <a key={inst.name} href={inst.url} target="_blank" rel="noopener noreferrer"

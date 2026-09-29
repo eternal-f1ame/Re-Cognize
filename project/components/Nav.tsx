@@ -28,7 +28,7 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-40 h-[var(--nav-h)] border-b-2 border-[var(--line)] bg-[var(--paper)]/90 backdrop-blur">
-      <div className="mx-auto flex h-full max-w-6xl items-center gap-6 px-4 sm:px-6">
+      <div className="page flex h-full items-center gap-6">
         <a href="#top" className="flex shrink-0 items-center gap-2 font-display text-lg font-extrabold">
           <Image src="/comic-icons/icon6.png" alt="" width={28} height={28} className="h-7 w-7" />
           <span>Re<span className="text-[var(--orange)]">:</span>Cognize</span>

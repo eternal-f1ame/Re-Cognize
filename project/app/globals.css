@@ -15,11 +15,19 @@
   --orange-soft: #f6e4d5;
   --shadow: 4px 4px 0 var(--ink);
   --shadow-sm: 3px 3px 0 var(--ink);
-  --nav-h: 3.5rem;
+  /* Layout is relative: the page is the screen's width less a gutter, every rem follows the root font
+     size (which follows the screen), and sections are padded in proportion to its height. Hairlines,
+     borders and the comic shadows stay in px so they do not thicken on large screens. */
+  --nav-h: 3.25rem;
+  --gutter: max(1rem, 2.5vw);
+  --page-max: 120rem;
+  --sec-pad: clamp(1.25rem, 4.5vh, 3rem);
 }
 
 @layer base {
   html {
+    /* 15px on phones and small laptops, 16px around 1440x800, up to 19px on large monitors */
+    font-size: clamp(15px, calc(0.35vw + 0.5vh + 7px), 19px);
     scroll-behavior: smooth;
     scroll-padding-top: var(--nav-h);
   }
@@ -168,13 +176,48 @@
     font-weight: 700;
   }
 
-  /* A visual no wider than the column, and no wider than lets it fit the viewport's height:
-     (height under the nav - the rest of its unit) x its aspect ratio, never below --fit-min */
+  /* The page column: the screen's width less a gutter on each side */
+  .page {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* A visual as wide as its column, unless that would make it taller than the screen allows:
+     (height under the nav - the rest of its unit) x its aspect ratio, never below --fit-min.
+     Ratio and reserve may change at lg and xl, where rows reflow into columns. */
   .fit-h {
+    --fr: var(--fit-ratio, 2);
+    --fres: var(--fit-reserve, 0rem);
     width: 100%;
     margin-inline: auto;
-    max-width: max(var(--fit-min, 480px), min(var(--fit-max, 1000px), calc((100vh - var(--nav-h) - var(--fit-reserve, 0px)) * var(--fit-ratio, 2))));
-    max-width: max(var(--fit-min, 480px), min(var(--fit-max, 1000px), calc((100svh - var(--nav-h) - var(--fit-reserve, 0px)) * var(--fit-ratio, 2))));
+    max-width: max(min(100%, var(--fit-min, 26rem)), min(100%, calc((100vh - var(--nav-h) - var(--fres)) * var(--fr))));
+    max-width: max(min(100%, var(--fit-min, 26rem)), min(100%, calc((100svh - var(--nav-h) - var(--fres)) * var(--fr))));
+  }
+
+  @media (min-width: 64rem) {
+    .fit-h {
+      --fr: var(--fit-ratio-lg, var(--fit-ratio, 2));
+      --fres: var(--fit-reserve-lg, var(--fit-reserve, 0rem));
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .fit-h {
+      --fr: var(--fit-ratio-xl, var(--fit-ratio-lg, var(--fit-ratio, 2)));
+      --fres: var(--fit-reserve-xl, var(--fit-reserve-lg, var(--fit-reserve, 0rem)));
+    }
+  }
+
+  /* Sections: padding in proportion to the screen's height, and a jump from the nav lands on the
+     header rather than on the padding above it */
+  .section-pad {
+    padding-block: var(--sec-pad);
+  }
+
+  .section-anchor {
+    scroll-margin-top: calc(0.5rem - var(--sec-pad));
   }
 
   /* Hover lift for cards that link somewhere */

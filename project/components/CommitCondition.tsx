@@ -5,9 +5,9 @@ export function CommitCondition() {
   return (
     <Section id="commit-condition" index={4} kicker="The commit condition" alt title="When a change to the gallery pays"
       lead="The bottleneck is acceptance, not vision, and one comparison decides it.">
-      <div className="mx-auto max-w-[1000px]">
-        <div className="panel px-5 py-5 text-center md:px-8 md:py-6">
-          <p className="mx-auto max-w-3xl text-[0.9688rem] leading-relaxed text-[var(--ink-2)]">{COMMIT_INTRO}</p>
+      <div>
+        <div data-fit-row="" className="panel px-5 py-5 text-center md:px-8 md:py-6">
+          <p className="mx-auto max-w-[80ch] text-[0.9688rem] leading-relaxed text-[var(--ink-2)]">{COMMIT_INTRO}</p>
           <p className="math my-3 text-[clamp(1.75rem,3.4vw,2.5rem)] leading-tight" aria-label="Delta equals c times p-eff minus a-plus">
             &Delta; = <i>c</i>&thinsp;(<i>p</i><sub className="text-[0.55em]">eff</sub> &minus; <i>a</i><sup className="text-[0.55em]">+</sup>)
           </p>
@@ -20,7 +20,7 @@ export function CommitCondition() {
               </div>
             ))}
           </div>
-          <p className="mx-auto mt-4 max-w-3xl text-[0.9688rem] leading-relaxed text-[var(--ink-2)]">{COMMIT_OUTRO}</p>
+          <p className="mx-auto mt-4 max-w-[80ch] text-[0.9688rem] leading-relaxed text-[var(--ink-2)]">{COMMIT_OUTRO}</p>
         </div>
       </div>
     </Section>

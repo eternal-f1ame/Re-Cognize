@@ -20,7 +20,7 @@ export function Citation() {
 
   return (
     <Section id="citation" index={8} kicker="Citation" alt title="Cite Re:Cognize">
-      <div className="relative mx-auto max-w-[1000px] overflow-hidden rounded-[10px] border-2 border-[var(--line)] bg-[var(--ink)] shadow-[4px_4px_0_var(--orange)]">
+      <div data-fit-row="" className="relative overflow-hidden rounded-[10px] border-2 border-[var(--line)] bg-[var(--ink)] shadow-[4px_4px_0_var(--orange)]">
         <div className="flex items-center justify-between border-b border-white/15 px-4 py-2.5">
           <span className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--paper-2)]/70">BibTeX</span>
           <button type="button" onClick={copy}
