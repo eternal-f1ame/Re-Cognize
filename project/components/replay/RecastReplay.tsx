@@ -31,14 +31,15 @@ const SCORE_Y = 252;
 
 type Layout = { w: number; h: number; pw: number; stream: StreamGeom; py: number; px: number[]; shown: PanelId[] };
 const WIDE: Layout = {
-  w: 1000, h: 96 + PH + 4, pw: 484, py: 96, px: [8, 508], shown: ["top1", "recast"],
-  stream: { x0: 89.4, dx: 112, y: 18, s: 0.62, pages: true, label: true },
+  w: 1214, h: 96 + PH + 4, pw: 602, py: 96, px: [0, 612], shown: ["top1", "recast"],
+  stream: { x0: 63.4, dx: 150, y: 18, s: 0.62, pages: true, label: true },
 };
 const narrow = (p: PanelId): Layout => ({
   w: 316, h: 52 + PH + 4, pw: 300, py: 52, px: [8], shown: [p],
   stream: { x0: 11.2, dx: 38, y: 6, s: 0.46, pages: false, label: false },
 });
-const FIT = { max: 1080, reserve: 236 };
+// The card shares the screen with the section header, its own controls and the caption.
+const FIT = { reserve: "17rem" };
 
 const steps = R.steps;
 const name = (c: Char) => R.names[c];

@@ -8,7 +8,7 @@ export function Resources() {
   return (
     <Section id="resources" index={7} kicker="Code & data" title="Rerun it, or regenerate every table"
       lead="The harness, the per-tuple results and the three corpora. With the results archive, every table and figure of the paper regenerates without a GPU.">
-      <div className="grid gap-4 md:grid-cols-2">
+      <div data-fit-row="" className="grid gap-4 md:grid-cols-2">
         {[code, results].map((r, i) => (
           <ResourceCard key={r.title} {...r} primary={i === 0} />
         ))}

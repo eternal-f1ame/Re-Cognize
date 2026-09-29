@@ -12,7 +12,7 @@ export function Protocols() {
     <Section id="protocols" index={3} kicker="The framework" title="Four protocols, one stream"
       lead="Every protocol answers the same stream of query crops in reading order; they differ only in the gallery and whether it may change.">
       <ProtocolReplay />
-      <div className="mx-auto mt-8 grid max-w-[1000px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {PROTOCOLS.map((p) => {
           const tone = TONE[p.tone as keyof typeof TONE];
           return (

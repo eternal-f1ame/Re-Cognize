@@ -22,9 +22,8 @@ const PANELS: { id: PanelId; tag: string; title: string; tone: "blue" | "orange"
   { id: "p4", tag: "P4", title: "grows by top-1", tone: "orange" },
 ];
 
-// Panel coordinates (every panel is PW x PH). The query waits at the left, beside the gallery it is
-// matched against, so a panel is short and the four sit side by side on one screen.
-const PW = 244;
+// Panel coordinates (a panel is pw x PH; pw depends on the layout). The query waits at the left, beside
+// the gallery it is matched against, so a panel is short and the four sit side by side on one screen.
 const PH = 250;
 const ROW_Y = [44, 92, 140];             // top of each character's row of crops
 const DOT_X = 74;                        // the row's colour, named in the legend under the stage
@@ -33,38 +32,42 @@ const ROW_S = 0.52;                      // gallery crops: 31 x 42
 const SLOT = { x: 12, y: 78, s: 0.8 };   // the query as it is decided: 48 x 64
 const TEXT_Y = 207;
 const SCORE_Y = 239;
-const CL = { w: 80, h: 66, s: 0.4 };     // P3 cluster boxes and their members (24 x 32)
+const CL = { h: 66, s: 0.4 };            // P3 cluster boxes (two per row) and their members (24 x 32)
 
-type Layout = { w: number; h: number; stream: StreamGeom; py: number; px: number[]; shown: PanelId[] };
+// Wide: four panels side by side on a stage about 3.5 times as wide as it is tall, so the loop can take
+// the page's full width and still fit a laptop screen's height. Narrow: one panel, chosen by tabs.
+type Layout = { w: number; h: number; pw: number; stream: StreamGeom; py: number; px: number[]; shown: PanelId[] };
 const WIDE: Layout = {
-  w: 1000, h: 96 + PH + 4, py: 96, px: [0, 252, 504, 756], shown: ["p1", "p2", "p3", "p4"],
-  stream: { x0: 89.4, dx: 112, y: 18, s: 0.62, pages: true, label: true },
+  w: 1214, h: 96 + PH + 4, pw: 296, py: 96, px: [0, 306, 612, 918], shown: ["p1", "p2", "p3", "p4"],
+  stream: { x0: 63.4, dx: 150, y: 18, s: 0.62, pages: true, label: true },
 };
 const narrow = (p: PanelId): Layout => ({
-  w: 264, h: 46 + PH + 4, py: 46, px: [10], shown: [p],
+  w: 264, h: 46 + PH + 4, pw: 244, py: 46, px: [10], shown: [p],
   stream: { x0: 11.5, dx: 31, y: 6, s: 0.4, pages: false, label: false },
 });
 // The card shares the screen with the section header, its own controls and the caption.
-const FIT = { max: 1080, reserve: 236 };
+const FIT = { reserve: "17rem" };
 
 const steps = R.steps;
 const name = (c: Char) => R.names[c];
 const truth = (k: number) => steps[k].truth;
 
-function rowX(j: number, n: number) {
-  const room = PW - 10 - ROW_S * TW - ROW_X;
+function rowX(j: number, n: number, pw: number) {
+  const room = pw - 10 - ROW_S * TW - ROW_X;
   const step = n > 1 ? Math.min(37, room / (n - 1)) : 0;
   return ROW_X + j * step;
 }
 
-function clusterBox(c: number) {
-  return { x: 70 + (c % 2) * 86, y: 42 + Math.floor(c / 2) * 72 };
+const clusterW = (pw: number) => (pw - 70 - 12 - 8) / 2;
+
+function clusterBox(c: number, pw: number) {
+  return { x: 70 + (c % 2) * (clusterW(pw) + 8), y: 42 + Math.floor(c / 2) * 72 };
 }
 
-function clusterMemberX(c: number, m: number, n: number) {
-  const room = CL.w - 12 - CL.s * TW;
-  const step = n > 1 ? Math.min(18, room / (n - 1)) : 0;
-  return clusterBox(c).x + 6 + m * step;
+function clusterMemberX(c: number, m: number, n: number, pw: number) {
+  const room = clusterW(pw) - 12 - CL.s * TW;
+  const step = n > 1 ? Math.min(20, room / (n - 1)) : 0;
+  return clusterBox(c, pw).x + 6 + m * step;
 }
 
 const center = (x: number, y: number, s: number) => ({ x: x + (TW * s) / 2, y: y + (TH * s) / 2 });
@@ -77,6 +80,7 @@ export function ProtocolReplay() {
   const [figure, setFigure] = useState(false);
   const closeFigure = useCallback(() => setFigure(false), []);
   const L = isNarrow ? narrow(tab) : WIDE;
+  const PW = L.pw;
   const clip = "rp-clip-protocols";
 
   // Where a query's copy sits in a panel while it is the current query, before it is filed.
@@ -105,11 +109,11 @@ export function ProtocolReplay() {
       const c = id.startsWith("q") ? steps[R.stream.indexOf(id)].p4.pred : R.crops[id].char;
       const row = p4RowBefore(c, k);
       const r = CHARS.indexOf(c);
-      return { x: rowX(row.indexOf(id), row.length), y: ROW_Y[r], s: ROW_S };
+      return { x: rowX(row.indexOf(id), row.length, PW), y: ROW_Y[r], s: ROW_S };
     }
     const rows = staticRows(p);
     const r = CHARS.indexOf(R.crops[id].char);
-    return { x: rowX(rows[r].indexOf(id), rows[r].length), y: ROW_Y[r], s: ROW_S };
+    return { x: rowX(rows[r].indexOf(id), rows[r].length, PW), y: ROW_Y[r], s: ROW_S };
   }
 
   function panel(p: PanelId, px: number): ReactNode {
@@ -127,17 +131,17 @@ export function ProtocolReplay() {
       rows.forEach((row, r) => {
         const n = p === "p4" ? p4Row(CHARS[r]).length : row.length;
         row.forEach((id, j) => {
-          els.push(<Tile key={`g-${id}`} crop={id} clip={clip} x={rowX(j, n)} y={ROW_Y[r]} s={ROW_S} frame={COLOR[R.crops[id].char]} />);
+          els.push(<Tile key={`g-${id}`} crop={id} clip={clip} x={rowX(j, n, PW)} y={ROW_Y[r]} s={ROW_S} frame={COLOR[R.crops[id].char]} />);
         });
       });
     } else {
       const n = Math.max(0, ...steps.map((s) => s.p3.cluster)) + 1;
       for (let c = 0; c < n; c++) {
         const opener = steps.findIndex((s) => s.p3.cluster === c);
-        const box = clusterBox(c);
+        const box = clusterBox(c, PW);
         els.push(
           <g key={`cl-${c}`} className="rp-fade" style={{ opacity: at(opener) >= VERDICT ? 1 : 0 }}>
-            <rect x={box.x} y={box.y} width={CL.w} height={CL.h} rx={8} fill="#fff" stroke={TONE.orange.stroke}
+            <rect x={box.x} y={box.y} width={clusterW(PW)} height={CL.h} rx={8} fill="#fff" stroke={TONE.orange.stroke}
               strokeWidth={1.5} strokeDasharray="4 3" />
             <text x={box.x + 6} y={box.y + 13} fontSize={9.5} fontWeight={600} fill={MUTED}>cluster {c + 1}</text>
           </g>,
@@ -166,7 +170,7 @@ export function ProtocolReplay() {
         }
         const c = s.p4.pred;
         const row = p4Row(c);
-        els.push(<Tile key={`q-${q}`} crop={q} clip={clip} x={rowX(row.indexOf(q), row.length)} y={ROW_Y[CHARS.indexOf(c)]}
+        els.push(<Tile key={`q-${q}`} crop={q} clip={clip} x={rowX(row.indexOf(q), row.length, PW)} y={ROW_Y[CHARS.indexOf(c)]}
           s={ROW_S} frame={COLOR[truth(k)]} dashed />);
         return;
       }
@@ -177,8 +181,8 @@ export function ProtocolReplay() {
       }
       const c = s.p3.cluster;
       const members = R.stream.filter((_, j) => at(j) >= FILE && steps[j].p3.cluster === c);
-      const box = clusterBox(c);
-      els.push(<Tile key={`q-${q}`} crop={q} clip={clip} x={clusterMemberX(c, members.indexOf(q), members.length)}
+      const box = clusterBox(c, PW);
+      els.push(<Tile key={`q-${q}`} crop={q} clip={clip} x={clusterMemberX(c, members.indexOf(q), members.length, PW)}
         y={box.y + 22} s={CL.s} frame={COLOR[truth(k)]} />);
     });
 
@@ -207,7 +211,7 @@ export function ProtocolReplay() {
       } else {
         const d = s.p3;
         if (!d.open && a >= MATCH && a < FILE) {
-          const box = clusterBox(d.cluster);
+          const box = clusterBox(d.cluster, PW);
           els.push(<Link key={`link-${cur}`} x1={from.x} y1={from.y} x2={box.x - 2} y2={box.y + CL.h / 2} drawn={a >= MATCH} visible={a < FILE} />);
         }
         const cmp = d.best === null ? "nothing to compare with yet" : `closest cluster ${d.best.toFixed(2)} ${d.best >= R.tau ? "≥" : "<"} ${R.tau.toFixed(2)}`;

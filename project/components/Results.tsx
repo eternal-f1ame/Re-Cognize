@@ -17,10 +17,11 @@ export function Results() {
   return (
     <Section id="results" index={6} kicker="Results" alt title="What the protocols measure, and where the headroom is"
       lead="Five backbones, two corpora: one seed recovers the closed-set mAP, correct growth would add over twenty points, and the commit condition says which changes pay.">
-      {/* two rows of 2:1 plots: the grid is half as tall as it is wide plus about 100 px of card chrome,
-          and shares the screen with the section header (about 135 px, landing 10 px under the nav) */}
-      <figure className="fit-h" style={fitStyle(2, { max: 1000, reserve: 266 })}>
-        <div data-fit-unit="desktop" className="grid gap-4 sm:grid-cols-2">
+      {/* 2:1 plots. Two by two the grid is about half as tall as it is wide plus the card chrome, and shares
+          the screen with the section header; four in a row (xl) it is an eighth as tall, so it takes the
+          full width. */}
+      <figure className="fit-h" style={fitStyle(2, { reserve: "18rem", ratioXl: 8, reserveXl: "11rem" })}>
+        <div data-fit-unit="desktop" data-fit-row="" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {HEADROOM_PANELS.map((p) => {
             const img = { src: p.src, alt: p.caption, ...PANEL };
             return (

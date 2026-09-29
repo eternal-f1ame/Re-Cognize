@@ -173,7 +173,8 @@ export function PanelFrame({ w, h, tag, title, tone, note }: {
   );
 }
 
-export function useNarrow(ref: RefObject<HTMLElement | null>, below = 620) {
+// Below this card width the wide stage's type would print under about 9 px, so one panel is shown instead.
+export function useNarrow(ref: RefObject<HTMLElement | null>, below = 960) {
   const [narrow, setNarrow] = useState(false);
   useEffect(() => {
     const el = ref.current;
@@ -206,7 +207,7 @@ export function ReplayCard({ cardRef, tabs, stage, ratio, fit, playing, onToggle
   const small = "btn btn-sm !gap-1.5 !px-2.5 !py-1 !text-[0.8125rem]";
   return (
     <figure className="fit-h" style={fitStyle(ratio, fit)}>
-      <div ref={cardRef} className="figure-card !p-2.5 sm:!p-3" data-fit-unit="">
+      <div ref={cardRef} className="figure-card !p-2.5 sm:!p-3" data-fit-unit="" data-fit-row="">
         {tabs}
         {stage}
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t-2 border-dashed border-[var(--paper-2)] pt-2">
