@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://re-cognize.vercel.app"><img alt="Project page" src="https://img.shields.io/badge/Project_page-re--cognize.vercel.app-c0662b?style=for-the-badge"></a>
   <a href="https://neurips.cc/Conferences/2026"><img alt="NeurIPS 2026, Evaluations and Datasets Track" src="https://img.shields.io/badge/NeurIPS_2026-Evaluations_%26_Datasets-36679b?style=for-the-badge"></a>
-  <img alt="Paper: arXiv link coming soon" src="https://img.shields.io/badge/Paper-arXiv_soon-8c8c8c?style=for-the-badge">
+  <a href="https://arxiv.org/abs/2609.34032"><img src="https://img.shields.io/badge/arXiv-2609.34032-b31b1b?style=flat-square" alt="Paper on arXiv: 2609.34032"></a>
   <a href="https://github.com/eternal-f1ame/Re-Cognize/releases/tag/neurips-2026"><img alt="Results archive" src="https://img.shields.io/badge/Results-23_MB-6d6152?style=for-the-badge"></a>
 </p>
 
