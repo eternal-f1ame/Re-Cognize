@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 
-export const PAPER_URL = ""; // arXiv link; the Paper button stays disabled while this is empty
+export const PAPER_URL = "https://arxiv.org/abs/2609.34032"; // arXiv link; the Paper button stays disabled while this is empty
 export const CODE_URL = "https://github.com/eternal-f1ame/Re-Cognize";
 export const RESULTS_URL = "https://github.com/eternal-f1ame/Re-Cognize/releases/tag/neurips-2026";
 
@@ -297,5 +297,7 @@ export const BIBTEX = `@inproceedings{baranwal2026recognize,
   title     = {Re:Cognize: Open-Set Comic Character Re-Identification},
   author    = {Baranwal, Aaditya and Kataria, Madhav and Rawat, Yogesh S. and Vyas, Shruti},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
-  year      = {2026}
+  year      = {2026},
+  eprint    = {2609.34032},
+  archivePrefix = {arXiv}
 }`;

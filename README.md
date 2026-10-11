@@ -126,7 +126,9 @@ python -m pytest tests                    # also builds the real backbones
   title     = {Re:Cognize: Open-Set Comic Character Re-Identification},
   author    = {Baranwal, Aaditya and Kataria, Madhav and Rawat, Yogesh S. and Vyas, Shruti},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
-  year      = {2026}
+  year      = {2026},
+  eprint    = {2609.34032},
+  archivePrefix = {arXiv}
 }
 ```
 

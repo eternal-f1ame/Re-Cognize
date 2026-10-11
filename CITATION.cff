@@ -17,6 +17,10 @@ authors:
 license: MIT
 repository-code: "https://github.com/eternal-f1ame/Re-Cognize"
 url: "https://re-cognize.vercel.app"
+identifiers:
+  - type: url
+    value: "https://arxiv.org/abs/2609.34032"
+    description: "The paper on arXiv"
 preferred-citation:
   type: conference-paper
   title: "Re:Cognize: Open-Set Comic Character Re-Identification"
