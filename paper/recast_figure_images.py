@@ -82,9 +82,10 @@ TEASER = {
     "A_C1":   (250, 166, 132, 136, ("crop", "Bakuman/Bakuman - c001 (web) - p018 [Unknown]", "Akito Takagi", 1), BLUE),
     "A_C2":   (250, 316, 132, 136, ("crop", "Bakuman/Bakuman - c001 (web) - p018 [Unknown]", "Moritaka Mashiro", 0), ORANGE),
 
+    # the fixed gallery holds no Azuki, so the Azuki query (B_Q2) has no match
     "B_G1":   (498, 142, 96, 116, ("crop", "Bakuman/Bakuman - c001 (web) - p011 [Unknown]", "Moritaka Mashiro", 0), GREY),
     "B_G2":   (610, 142, 96, 116, ("crop", "Bakuman/Bakuman - c001 (web) - p025 [Unknown]", "Akito Takagi", 0), GREY),
-    "B_G3":   (722, 142, 96, 116, ("crop", "Bakuman/Bakuman - c001 (web) - p051 [Unknown]", "Miho Azuki", 0), GREY),
+    "B_G3":   (722, 142, 96, 116, ("crop", "Bakuman/Bakuman - c001 (web) - p032 [Unknown]", "Nobuhiro Mashiro", 1), GREY),
     "B_Q1":   (540, 316, 104, 136, ("crop", "Bakuman/Bakuman - c001 (web) - p004 [Unknown]", "Moritaka Mashiro", 0), BLUE),
     "B_Q2":   (680, 316, 104, 136, ("crop", "Bakuman/Bakuman - c001 (web) - p050 [Unknown]", "Miho Azuki", 0), ORANGE),
 }
