@@ -4,7 +4,7 @@ Canva deck: <https://www.canva.com/d/5BlXqOtZsn5h6UH> ("Re:Cognize — NeurIPS 2
 Speaker notes in Canva carry a ~30 s script per slide (about 4:45 in total) and an animation cue.
 
 The figure pages (question, binding, pricing) are copies of the native Canva figures from
-"Re:Cast method diagrams", so every box and arrow is a separate, animatable element. The bar charts are
+"Vouch method diagrams", so every box and arrow is a separate, animatable element. The bar charts are
 native Canva shapes drawn from the released results. `media/` holds MP4 versions of the two project-page
 replays, which Canva plays automatically when the slide opens.
 
@@ -18,10 +18,10 @@ replays, which Canva plays automatically when the slide opens.
 | 4 | Finding one | Recognising is close to solved | P1 vs P2 bars, mAP and Rank-1 |
 | 5 | Finding two | Knowing what to believe is not | static / own top-1 / true-label bars |
 | 6 | One comparison | Δ = c · (p_eff − a⁺): commit or hold | equation, three term cards, commit/hold boxes |
-| 7 | Re:Cast | Grow only where the page vouches | three change cards, `recast-loop.mp4` |
+| 7 | Vouch | Grow only where the page vouches | three change cards, `vouch-loop.mp4` |
 | 8 | Binding | With first-appearance seeds, the story carries the label forward | native binding figure (a)–(c) |
 | 9 | Price before you commit | Any encoder can bind; Δ decides whether to trust it | native binder → decide pipeline |
-| 10 | Takeaway | Re:Cognize measures whether a model can read along; Re:Cast is a cast that does | three rows, links |
+| 10 | Takeaway | Re:Cognize measures whether a model can read along; Vouch builds a cast that does | three rows, links |
 
 ## Animating in Canva
 
