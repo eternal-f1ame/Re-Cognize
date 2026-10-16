@@ -1,6 +1,6 @@
 """Expand each seed by its own page group, before the stream starts.
 
-Re:Cast does nothing at k=1, and both halves fail for the same reason: with one crop per identity the cast sheet is that crop (a mean of one) and the must-link rule almost never fires, because it needs a seed to share a page group with the query. That is the cell the framework's headline claim is about, so it is the cell worth attacking.
+Vouch does nothing at k=1, and both halves fail for the same reason: with one crop per identity the cast sheet is that crop (a mean of one) and the must-link rule almost never fires, because it needs a seed to share a page group with the query. That is the cell the framework's headline claim is about, so it is the cell worth attacking.
 
 The fix does not need a new signal. A seed sits on a page, and MagiV2's per-page character clustering already says which other crops on that page are the same character, at 89.9 % over the test set. Those crops can join the gallery under the seed's label before the stream starts, with no appearance decision, no threshold and no access to anything the protocol has not already handed over. It is a statement about *seeding*, not about appending: a practitioner who labels one crop gets its page-siblings free, which is how annotation works in practice.
 

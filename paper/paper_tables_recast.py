@@ -1,10 +1,10 @@
-"""Emit the paper's Re:Cast, transfer, commit-condition and binding tables from `results/`.
+"""Emit the paper's Vouch, transfer, commit-condition and binding tables from `results/`.
 
 Sibling of `paper_tables.py`, which writes the POPCharacters grid, the full P1 grid and the
 Manga109 table, and like it types no number by hand. This module writes four tables:
 
   --table recast       -> paper/generated/tables/recast_combined.tex   (tab:recast_combined)
-                          Re:Cast one change at a time, with seed expansion beside it
+                          Vouch one change at a time, with seed expansion beside it
   --table crosscorpus  -> paper/generated/tables/cross_corpus_summary.tex (tab:cross_corpus)
                           the headline rows of the appendix Manga109 and Re:Verse tables
   --table commit       -> paper/generated/tables/commit_condition.tex   (tab:commit)
@@ -125,7 +125,7 @@ def fmt_abs(v: Optional[float]) -> str:
     return "---" if v is None else f"{v:.2f}"
 
 
-# --------------------------------------------------------------------------- table 1: Re:Cast
+# --------------------------------------------------------------------------- table 1: Vouch
 
 CAPTION_RECAST = (
     r"\textbf{\ReCast, one change at a time}: P4 identity Rank-1 with random seeds at "

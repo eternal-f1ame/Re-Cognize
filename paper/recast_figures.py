@@ -1,4 +1,4 @@
-"""Figures for the Re:Cast sections of the paper, in the style of its other main-text plots.
+"""Figures for the Vouch sections of the paper, in the style of its other main-text plots.
 
 Type follows paper_style.TYPE at the printed size: the two schematics are drawn on
 canvases of \\linewidth and the two plots on 0.48\\linewidth, and the paper includes
@@ -90,7 +90,7 @@ def place(ax, spec, x, y, w, h, z=3, scale=6):
 
 # ────────────────────────────── A. schematic, three moves ──────────────────────────────
 def schematic_three(out: Path):
-    """The three moves Re:Cast makes, on real pages.
+    """The three moves Vouch makes, on real pages.
 
     Crops and pages are Re:Verse's Re:Zero. Identity A is Rom throughout, so the
     same character carries the cast sheet, the commitment and the seed expansion.
@@ -190,7 +190,7 @@ def schematic_three(out: Path):
 
 # ────────────────────────── A2. schematic, gallery over time ──────────────────────────
 def schematic_timeline(out: Path):
-    """Re:Cast over six real pages: it writes only where the page names an identity.
+    """Vouch over six real pages: it writes only where the page names an identity.
 
     Pages are Re:Verse's Re:Zero, 005_0005 to 005_0010 in reading order, and whether
     each one counts as an anchor is read from its annotations rather than asserted,
@@ -395,7 +395,7 @@ def expansion(out: Path):
         ax.annotate("", xy=(xi, hi), xytext=(xi, lo),
                     arrowprops=dict(arrowstyle="-|>", color=BLUE, lw=1.3))
         ax.text(xi + 0.13, hi, f"{hi:+.1f}", fontsize=5, color=BLUE, va="center")
-    ax.scatter(x, plain, s=34, c=GREY, zorder=5, label="Re:Cast alone, exactly $+0.00$")
+    ax.scatter(x, plain, s=34, c=GREY, zorder=5, label="Vouch alone, exactly $+0.00$")
     ax.scatter(x, expd, s=34, c=BLUE, zorder=5, label="with seed expansion")
     ax.set_xlim(-0.5, len(BB) - 0.25); ax.set_ylim(-2.1, 8.2)
     ax.set_xticks(x); ax.set_xticklabels([l for _, l in BB], rotation=30, ha="right")
