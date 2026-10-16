@@ -1,8 +1,8 @@
 import { Section } from "./Section";
 import { Figure } from "./Figure";
 import type { Fit } from "./fit";
-import { RecastReplay } from "./replay/RecastReplay";
-import { BINDING_CAPTION, BINDING_FIGURES, RECAST_CAPTION, RECAST_CHANGES, RECAST_FIGURES } from "../content";
+import { VouchReplay } from "./replay/VouchReplay";
+import { BINDING_CAPTION, BINDING_FIGURES, VOUCH_CAPTION, VOUCH_CHANGES, VOUCH_FIGURES } from "../content";
 
 // The schematic shares the screen with its card padding and its caption below.
 const SCHEMATIC_FIT: Fit = { reserve: "7rem" };
@@ -10,21 +10,21 @@ const SCHEMATIC_FIT: Fit = { reserve: "7rem" };
 // card padding shares the height.
 const BINDING_FIT: Fit = { reserve: "15rem", reserveLg: "3rem" };
 
-export function ReCast() {
+export function Vouch() {
   return (
-    <Section id="recast" index={5} kicker="Re:Cast" title="A cast that reads along"
+    <Section id="vouch" index={5} kicker="Vouch" title="A cast that reads along"
       lead="A cast sheet of one running average per character, grown only where the page itself vouches for a crop, with nothing fitted on data.">
-      <RecastReplay />
+      <VouchReplay />
 
       {/* the schematic, with the three changes it draws beside it on wide screens */}
       <div data-fit-row="" className="mt-8 grid items-start gap-x-[2.5vw] gap-y-6 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)]">
-        <Figure images={RECAST_FIGURES} lead="Re:Cast" caption={RECAST_CAPTION} fit={SCHEMATIC_FIT}
+        <Figure images={VOUCH_FIGURES} lead="Vouch" caption={VOUCH_CAPTION} fit={SCHEMATIC_FIT}
           sizes="(min-width: 64rem) 66vw, 100vw" />
         {/* the column stretches to the row's height and the cards stick under the nav while the schematic
             scrolls past, as the abstract's scope note does */}
         <div className="lg:self-stretch">
           <div className="grid gap-4 md:grid-cols-3 lg:sticky lg:top-[calc(var(--nav-h)+1.5rem)] lg:grid-cols-1">
-            {RECAST_CHANGES.map((c) => (
+            {VOUCH_CHANGES.map((c) => (
               <article key={c.title} className="panel p-4">
                 <div className="flex items-center gap-3">
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-[var(--line)] bg-[var(--orange)] font-display text-sm font-extrabold text-[var(--paper)]">

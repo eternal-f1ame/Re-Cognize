@@ -375,7 +375,7 @@ figure's text at the size the paper prints it.
 | Table 2, cross-protocol summary | `python paper/paper_tables.py --table cross --out paper/generated/tables/popcharacters_eval_scores.tex` |
 | Table 3, P3 on full streams | `results/p3_tau.json` (fixed rule at 0.55 and 0.80) and the `nmi` fields of `results/popcharacters/*_finetuned_seed0/` and `results/p3tau80/` |
 | Table 4, the commit condition | `python paper/paper_tables_recast.py --table commit --out paper/generated/tables/commit_condition.tex` |
-| Table 5, Re:Cast one change at a time | `python paper/paper_tables_recast.py --table recast --out paper/generated/tables/recast_combined.tex` |
+| Table 5, Vouch one change at a time | `python paper/paper_tables_recast.py --table recast --out paper/generated/tables/recast_combined.tex` |
 | Table 6, two-stage binding | `python paper/paper_tables_recast.py --table transport --out paper/generated/tables/transport_results.tex` |
 | Figure 2, the four protocols | `python paper/protocols_figure.py` (draws crops from the datasets) |
 | Figure 3 (a)-(c) | `python paper/paper_figures.py` |
@@ -399,4 +399,4 @@ figure's text at the size the paper prints it.
 
 Figure 1 and Tables 1, 7 and 8 are written or drawn by hand. `python paper/paper_tables.py --check`
 prints every grid cell with its spread over training runs, and `python paper/paper_tables_recast.py
---table <name> --check` prints a Re:Cast table's numbers instead of its LaTeX.
+--table <name> --check` prints a Vouch table's numbers instead of its LaTeX.

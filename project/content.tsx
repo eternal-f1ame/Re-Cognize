@@ -38,7 +38,7 @@ export const NAV = [
   { id: "findings", label: "Findings" },
   { id: "protocols", label: "Protocols" },
   { id: "commit-condition", label: "Commit condition" },
-  { id: "recast", label: "Re:Cast" },
+  { id: "vouch", label: "Vouch" },
   { id: "results", label: "Results" },
   { id: "resources", label: "Code & data" },
   { id: "citation", label: "Cite" },
@@ -54,7 +54,7 @@ export const TEASER = {
     "Left: a reader's question, such as where Takagi asks Mashiro, depends on who appears on which page. Centre: " +
     "standard Re-ID matches each query against a gallery built before reading starts, so a new character finds no " +
     "match. Right: Re:Cognize streams crops in reading order against four galleries: every character (P1), a few " +
-    "labelled examples of each (P2), none (P3), or a few that grow as it reads (P4). Re:Cast grows the gallery only " +
+    "labelled examples of each (P2), none (P3), or a few that grow as it reads (P4). Vouch grows the gallery only " +
     "where additions are right more often than the gallery on the queries they take over.",
 };
 
@@ -78,10 +78,10 @@ export const ABSTRACT = [
     "accuracy. The bottleneck is acceptance, not vision, and one comparison decides it: an addition pays exactly " +
     "when it is right more often than the cast already was on the queries it takes over. The comparison has nothing " +
     "to fit, and measured on half of a new corpus it calls the other half correctly.",
-  "Re:Cast puts it to work with nothing fitted on data: a cast sheet of one running average per character, grown " +
+  "Vouch puts it to work with nothing fitted on data: a cast sheet of one running average per character, grown " +
     "only where the page itself vouches for a crop. It recovers a third to two thirds of what perfect labels would, " +
     "depending on whether the cast starts from random examples or from first appearances. Re:Cognize measures " +
-    "whether a model can read along; Re:Cast is a cast that does.",
+    "whether a model can read along; Vouch builds a cast that does.",
   "Our claims are on identity maintenance, recognising characters already met; the emergence of new ones is " +
     "measured as a diagnostic under a fixed reference rule, and we propose no method for it.",
 ];
@@ -108,14 +108,14 @@ export const HIGHLIGHTS = [
   },
   {
     icon: "cast",
-    title: "Re:Cast reads along",
+    title: "Vouch reads along",
     text:
       "One running average per character, grown only where the page itself vouches for a crop, recovers a third " +
       "to two thirds of what perfect labels would.",
   },
 ];
 
-export const QUOTE = "Re:Cognize measures whether a model can read along; Re:Cast is a cast that does.";
+export const QUOTE = "Re:Cognize measures whether a model can read along; Vouch builds a cast that does.";
 
 export const PROTOCOLS_FIGURE: { src: string; width: number; height: number; alt: string; caption: ReactNode } = {
   src: "/figures/protocols.png",
@@ -194,17 +194,17 @@ export const COMMIT_OUTRO: ReactNode = (
   </>
 );
 
-export const RECAST_FIGURES = [
-  { src: "/figures/recast_schematic_a.png", width: 2400, height: 800, alt: "Re:Cast: cast sheet, commitment and seed expansion" },
-  { src: "/figures/recast_schematic_b.png", width: 2400, height: 600, alt: "Over six pages the cast sheet is updated only on the pages that name the character" },
+export const VOUCH_FIGURES = [
+  { src: "/figures/vouch_schematic_a.png", width: 2400, height: 800, alt: "Vouch: cast sheet, commitment and seed expansion" },
+  { src: "/figures/vouch_schematic_b.png", width: 2400, height: 600, alt: "Over six pages the cast sheet is updated only on the pages that name the character" },
 ];
 
-export const RECAST_CAPTION =
+export const VOUCH_CAPTION =
   "on Re:Zero crops from Re:Verse, with Rom as identity A. Top: the three changes. A page names a character when " +
   "one of its crops is already committed to it, and commitment then adds that crop's page-group sibling. Bottom: " +
   "over six pages the cast sheet is updated only on the four that name Rom; elsewhere the rule abstains.";
 
-export const RECAST_CHANGES = [
+export const VOUCH_CHANGES = [
   {
     label: "a",
     title: "A cast sheet, not a bag of crops",
@@ -229,8 +229,8 @@ export const RECAST_CHANGES = [
 ];
 
 export const BINDING_FIGURES = [
-  { src: "/figures/recast_binding.png", width: 2400, height: 800, alt: "Binding: page groups merged in reading order and named by their first seed" },
-  { src: "/figures/recast_commit_flow.png", width: 2400, height: 600, alt: "Pricing the binder: crops are committed when the commit condition predicts a gain" },
+  { src: "/figures/vouch_binding.png", width: 2400, height: 800, alt: "Binding: page groups merged in reading order and named by their first seed" },
+  { src: "/figures/vouch_commit_flow.png", width: 2400, height: 600, alt: "Pricing the binder: crops are committed when the commit condition predicts a gain" },
 ];
 
 export const BINDING_CAPTION =
@@ -259,7 +259,7 @@ export const RESOURCES = [
   {
     icon: "code",
     title: "Code",
-    text: "The evaluation harness with all four protocols, Re:Cast, the memory-block baseline, and the analyses behind every number in the paper.",
+    text: "The evaluation harness with all four protocols, Vouch, the memory-block baseline, and the analyses behind every number in the paper.",
     href: CODE_URL,
     label: "github.com/eternal-f1ame/Re-Cognize",
   },
@@ -287,7 +287,7 @@ export const RESOURCES = [
   {
     icon: "book",
     title: "Re:Verse",
-    text: "The Re:Zero annotations behind the Re:Cast and binding figures.",
+    text: "The Re:Zero annotations behind the Vouch and binding figures.",
     href: "https://re-verse.vercel.app",
     label: "re-verse.vercel.app",
   },

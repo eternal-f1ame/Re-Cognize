@@ -7,14 +7,14 @@ import {
   streamX, useNarrow, type Char, type StreamGeom,
 } from "./parts";
 
-// Same beat as the protocols loop: lift, deal, match, verdict (and Re:Cast's page check), file, settle.
+// Same beat as the protocols loop: lift, deal, match, verdict (and Vouch's page check), file, settle.
 const LIFT = 0, DEAL = 1, MATCH = 2, VERDICT = 3, FILE = 4;
 const TIMELINE: Timeline = { beats: R.steps.length, phases: [320, 620, 640, 900, 680, 520], intro: 700, hold: 3000, fade: 500 };
 
-type PanelId = "top1" | "recast";
+type PanelId = "top1" | "vouch";
 const PANELS: { id: PanelId; tag: string; title: string; tone: "orange" | "ink" }[] = [
   { id: "top1", tag: "P4", title: "grows by its own top-1", tone: "orange" },
-  { id: "recast", tag: "Re:Cast", title: "one entry each, page-checked", tone: "ink" },
+  { id: "vouch", tag: "Vouch", title: "one entry each, page-checked", tone: "ink" },
 ];
 
 // Panel coordinates (a panel is pw x PH; pw depends on the layout). As in the protocols loop the query
@@ -31,7 +31,7 @@ const SCORE_Y = 252;
 
 type Layout = { w: number; h: number; pw: number; stream: StreamGeom; py: number; px: number[]; shown: PanelId[] };
 const WIDE: Layout = {
-  w: 1214, h: 96 + PH + 4, pw: 602, py: 96, px: [0, 612], shown: ["top1", "recast"],
+  w: 1214, h: 96 + PH + 4, pw: 602, py: 96, px: [0, 612], shown: ["top1", "vouch"],
   stream: { x0: 63.4, dx: 150, y: 18, s: 0.62, pages: true, label: true },
 };
 const narrow = (p: PanelId): Layout => ({
@@ -52,13 +52,13 @@ function rowX(j: number, n: number, pw: number) {
   return ROW_X + j * step;
 }
 
-export function RecastReplay() {
+export function VouchReplay() {
   const loop = useLoop(TIMELINE);
   const { clock, at, epoch, fading } = loop;
   const isNarrow = useNarrow(loop.ref);
-  const [tab, setTab] = useState<PanelId>("recast");
+  const [tab, setTab] = useState<PanelId>("vouch");
   const L = isNarrow ? narrow(tab) : WIDE;
-  const clip = "rp-clip-recast";
+  const clip = "rp-clip-vouch";
 
   const inFlight = (k: number, px: number) =>
     at(k) === LIFT
@@ -68,9 +68,9 @@ export function RecastReplay() {
   // P4: seeds, then every query filed under its top-1 (all of them); as of now, and as of query k.
   const top1Row = (c: Char) => [...seedsOf(c), ...R.stream.filter((_, j) => at(j) >= FILE && steps[j].p4.pred === c)];
   const top1RowBefore = (c: Char, k: number) => [...seedsOf(c), ...R.stream.filter((_, j) => j < k && steps[j].p4.pred === c)];
-  // Re:Cast: the seed, then the queries committed to that character; as of now, and as of query k.
-  const deck = (c: Char) => [...seedsOf(c), ...R.stream.filter((_, j) => at(j) >= FILE && steps[j].recast.commit === c)];
-  const deckBefore = (c: Char, k: number) => [...seedsOf(c), ...R.stream.filter((_, j) => j < k && steps[j].recast.commit === c)];
+  // Vouch: the seed, then the queries committed to that character; as of now, and as of query k.
+  const deck = (c: Char) => [...seedsOf(c), ...R.stream.filter((_, j) => at(j) >= FILE && steps[j].vouch.commit === c)];
+  const deckBefore = (c: Char, k: number) => [...seedsOf(c), ...R.stream.filter((_, j) => j < k && steps[j].vouch.commit === c)];
 
   function panel(p: PanelId, px: number): ReactNode {
     const meta = PANELS.find((x) => x.id === p)!;
@@ -117,7 +117,7 @@ export function RecastReplay() {
           y={ROW_Y[CHARS.indexOf(s.p4.pred)]} s={ROW_S} frame={COLOR[truth(k)]} dashed />);
         return;
       }
-      const c = s.recast.commit;
+      const c = s.vouch.commit;
       if (!filed || !c) {
         if (ak === Infinity) return;                       // held: it leaves the stage
         els.push(<Tile key={`q-${q}`} crop={q} clip={clip} {...inFlight(k, px)} frame={frame} opacity={filed ? 0 : 1} />);
@@ -154,7 +154,7 @@ export function RecastReplay() {
             fill={a >= VERDICT && !ok ? WRONG : INK}>{msg}</text>;
         }
       } else {
-        const rc = s.recast;
+        const rc = s.vouch;
         const d = deckBefore(rc.pred, cur);
         const t = { x: ROW_X + (d.length - 1) * DECK_DX, y: ROW_Y[CHARS.indexOf(rc.pred)] };
         const ok = rc.pred === s.truth;
@@ -202,9 +202,9 @@ export function RecastReplay() {
     }
 
     const scored = R.stream.map((_, j) => j).filter((j) => at(j) >= VERDICT);
-    const added = R.stream.map((_, j) => j).filter((j) => at(j) >= FILE && (p === "top1" || steps[j].recast.commit));
-    const pred = (j: number) => (p === "top1" ? steps[j].p4.pred : steps[j].recast.pred);
-    const filedAs = (j: number) => (p === "top1" ? steps[j].p4.pred : steps[j].recast.commit);
+    const added = R.stream.map((_, j) => j).filter((j) => at(j) >= FILE && (p === "top1" || steps[j].vouch.commit));
+    const pred = (j: number) => (p === "top1" ? steps[j].p4.pred : steps[j].vouch.pred);
+    const filedAs = (j: number) => (p === "top1" ? steps[j].p4.pred : steps[j].vouch.commit);
     const right = scored.filter((j) => pred(j) === truth(j)).length;
     const wrong = added.filter((j) => filedAs(j) !== truth(j)).length;
     let score = scored.length ? `${right} of ${scored.length} right` : "–";
@@ -229,13 +229,13 @@ export function RecastReplay() {
     <ReplayCard
       cardRef={loop.ref}
       tabs={isNarrow ? (
-        <Tabs items={PANELS.map((p) => ({ id: p.id, label: p.id === "top1" ? "P4 · grows by top-1" : "Re:Cast" }))} value={tab} onChange={setTab} />
+        <Tabs items={PANELS.map((p) => ({ id: p.id, label: p.id === "top1" ? "P4 · grows by top-1" : "Vouch" }))} value={tab} onChange={setTab} />
       ) : undefined}
       ratio={L.w / L.h}
       fit={FIT}
       stage={(
         <svg viewBox={`0 0 ${L.w} ${L.h}`} className="rp-svg block h-auto w-full" role="img"
-          aria-label="The same eight crops against two ways of growing the gallery: filing every query under its top-1 match ends at five of eight with three wrong additions, Re:Cast adds only the two crops their page ties to a seed and ends at seven of eight.">
+          aria-label="The same eight crops against two ways of growing the gallery: filing every query under its top-1 match ends at five of eight with three wrong additions, Vouch adds only the two crops their page ties to a seed and ends at seven of eight.">
           <ClipDef id={clip} />
           <g key={`${epoch}-${isNarrow ? tab : "wide"}`} className="rp-stage" style={{ opacity: fading ? 0 : 1 }}>
             <StreamStrip g={L.stream} clip={clip} clock={clock} at={at} />
@@ -252,11 +252,11 @@ export function RecastReplay() {
       clock={clock}
       beats={steps.length}
       status={status}
-      lead="Growth by top-1 against Re:Cast, on the same stream."
+      lead="Growth by top-1 against Vouch, on the same stream."
       caption={(
         <>
           Both start from one seed per character. P4 files every query under its top-1 match, so the page-29 mistake
-          stays in the gallery and is matched again. Re:Cast keeps one averaged entry per character and adds a crop only
+          stays in the gallery and is matched again. Vouch keeps one averaged entry per character and adds a crop only
           when MagiV2&rsquo;s page grouping ties it to a crop already committed, here the seeds on pages 17 and 50;
           everywhere else it holds.
         </>

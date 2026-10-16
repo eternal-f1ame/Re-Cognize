@@ -10,7 +10,7 @@ eight steps; every decision on it is computed here, none is drawn by hand:
 - P1 and P2 rank a fixed gallery (P1 holds two crops of Takagi and Mashiro, P2 one seed each);
 - P3 is `recognize.protocols.rules.fixed` at TAU_NOV on the stream alone;
 - P4 starts from P2's seeds and files every query under its top-1 identity, after scoring it;
-- Re:Cast keeps one L2-normalised mean per character and files a query only when MagiV2's page
+- Vouch keeps one L2-normalised mean per character and files a query only when MagiV2's page
   group (results/panels/Bakuman.json) links it to a crop already committed, as the `mustlink`
   policy of `run_p4` does.
 
@@ -54,7 +54,7 @@ PAGE = "Bakuman - c001 (web) - p%03d [Unknown]"
 # (page, annotation index) of every crop the loops show. The gallery is the protocols figure's.
 GALLERY = {"T1": (17, 0), "T2": (25, 4), "M1": (12, 1), "M2": (11, 3), "A1": (50, 2)}
 P1_GALLERY = ["T1", "T2", "M1", "M2", "A1"]
-SEEDS = ["T1", "M1", "A1"]              # P2, P4 and Re:Cast start from one seed per character
+SEEDS = ["T1", "M1", "A1"]              # P2, P4 and Vouch start from one seed per character
 STREAM = {"q1": (8, 0), "q2": (17, 6), "q3": (25, 6), "q4": (29, 0),
           "q5": (43, 1), "q6": (44, 0), "q7": (47, 0), "q8": (50, 3)}
 
@@ -155,7 +155,7 @@ def main() -> int:
         pred = max(sims, key=sims.get)
         via = [m for m, c in committed.items() if group[m] is not None and group[m] == group[q]]
         commit = committed[via[0]] if via else None
-        step["recast"] = {"pred": pred, "sims": sims, "commit": commit, "via": via[0] if via else None}
+        step["vouch"] = {"pred": pred, "sims": sims, "commit": commit, "via": via[0] if via else None}
         if commit:
             cast[commit].append(q)
             committed[q] = commit
@@ -179,11 +179,11 @@ def main() -> int:
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps(data, indent=1) + "\n")
 
-    right = {p: sum(s[p]["pred"] == s["truth"] for s in steps) for p in ("p1", "p2", "p4", "recast")}
+    right = {p: sum(s[p]["pred"] == s["truth"] for s in steps) for p in ("p1", "p2", "p4", "vouch")}
     wrong_adds = sum(s["p4"]["pred"] != s["truth"] for s in steps)
     print(f"[replay] Rank-1 over {len(steps)} queries: {right}; P4 wrong additions {wrong_adds}; "
-          f"P3 clusters {len(set(clusters))}; Re:Cast commits "
-          f"{[s['q'] for s in steps if s['recast']['commit']]}")
+          f"P3 clusters {len(set(clusters))}; Vouch commits "
+          f"{[s['q'] for s in steps if s['vouch']['commit']]}")
     print(f"[replay] wrote {OUT_JSON.relative_to(ROOT)} and {len(crops)} thumbnails")
     return 0
 

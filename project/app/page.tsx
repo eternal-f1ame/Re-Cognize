@@ -4,7 +4,7 @@ import { Abstract } from "../components/Abstract";
 import { Highlights } from "../components/Highlights";
 import { Protocols } from "../components/Protocols";
 import { CommitCondition } from "../components/CommitCondition";
-import { ReCast } from "../components/ReCast";
+import { Vouch } from "../components/Vouch";
 import { Results } from "../components/Results";
 import { Resources } from "../components/Resources";
 import { Citation } from "../components/Citation";
@@ -20,7 +20,7 @@ export default function Home() {
         <Highlights />
         <Protocols />
         <CommitCondition />
-        <ReCast />
+        <Vouch />
         <Results />
         <Resources />
         <Citation />

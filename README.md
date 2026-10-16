@@ -41,22 +41,22 @@ stream of character crops in reading order, answered against four galleries.
 The paper finds that assembling a gallery is close to solved, while growing one is not. A
 gallery that adds the model's own matches gets worse, while the same growth with correct labels
 would add over twenty points of top-1 accuracy. One comparison decides whether a change to the
-gallery pays. **Re:Cast** acts on it with nothing fitted on data: one running average per
+gallery pays. **Vouch** acts on it with nothing fitted on data: one running average per
 character, grown only where the page vouches for a crop. A memory-augmented encoder serves as
 the maintenance baseline.
 
 <p align="center">
-  <img src="docs/media/recast-loop.gif" width="95%" alt="The same eight crops against growth by top-1 and against Re:Cast">
+  <img src="docs/media/vouch-loop.gif" width="95%" alt="The same eight crops against growth by top-1 and against Vouch">
   <br><sub>The same stream against two ways of growing the gallery. Growth by top-1 ends at five of eight with three wrong
-  additions; Re:Cast adds only the two crops their page ties to a seed and ends at seven of eight.</sub>
+  additions; Vouch adds only the two crops their page ties to a seed and ends at seven of eight.</sub>
 </p>
 
 <p align="center">
-  <img src="project/public/figures/recast_schematic_a.png" width="95%" alt="Re:Cast: a cast sheet of one average per character, commitment only where the page already names the character, and seed expansion">
-  <img src="project/public/figures/recast_schematic_b.png" width="95%" alt="Over six pages the cast sheet is updated only on the pages that name the character">
+  <img src="project/public/figures/vouch_schematic_a.png" width="95%" alt="Vouch: a cast sheet of one average per character, commitment only where the page already names the character, and seed expansion">
+  <img src="project/public/figures/vouch_schematic_b.png" width="95%" alt="Over six pages the cast sheet is updated only on the pages that name the character">
 </p>
 
-This repository holds the evaluation harness, the Re:Cast gallery, the memory-block baseline and
+This repository holds the evaluation harness, the Vouch gallery, the memory-block baseline and
 its trainer, the analysis scripts behind every number in the paper, and the generators of its
 tables and figures.
 
@@ -67,7 +67,7 @@ src/recognize/       evaluation harness: data and reading order, backbones, metr
 src/memory_block/    the memory-block baseline and its trainer
 scripts/             train.py and evaluate.py launchers, weights and results fetchers, reports, SLURM examples
 configs/             series splits and the training campaign
-analysis/            the analyses behind the paper's numbers (Re:Cast, binding, diagnostics)
+analysis/            the analyses behind the paper's numbers (Vouch, binding, diagnostics)
 paper/               generators of the paper's tables and figures
 docs/                protocols.md (the specification) and reproducing.md (every command)
 tests/               unit and regression tests

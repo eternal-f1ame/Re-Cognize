@@ -16,7 +16,7 @@ export type Step = {
   p2: Match;
   p3: { cluster: number; best: number | null; open: boolean };
   p4: Match;
-  recast: { pred: Char; sims: Record<Char, number>; commit: Char | null; via: string | null };
+  vouch: { pred: Char; sims: Record<Char, number>; commit: Char | null; via: string | null };
 };
 export type Replay = {
   encoder: string;
