@@ -90,12 +90,12 @@ export const ABSTRACT = [
 export const HIGHLIGHTS = [
   {
     icon: "eye",
-    title: "A small gallery nearly matches the full one",
+    title: "Recognising familiar characters is within reach",
     text: "A single reference image per character already matches closed-set retrieval.",
   },
   {
     icon: "alert",
-    title: "Growing it remains difficult",
+    title: "Knowing which matches to trust is not",
     text:
       "Growing a gallery from the model's own matches makes it worse on every backbone, while correct labels " +
       "would add over twenty points.",

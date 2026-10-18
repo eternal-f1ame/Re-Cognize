@@ -38,8 +38,8 @@ stream of character crops in reading order, answered against four galleries.
 | P3 | empty: the model organises the stream into characters itself (a diagnostic of emergence) |
 | P4 | the seeds, grown by the model as it reads |
 
-The paper finds that a small gallery nearly matches the full one, while growing it remains
-difficult. A gallery that adds the model's own matches gets worse, while the same growth with correct labels
+The paper finds that recognising familiar characters is within reach, while knowing which
+matches to trust is not. A gallery that adds the model's own matches gets worse, while the same growth with correct labels
 would add over twenty points of top-1 accuracy. One comparison decides whether a change to the
 gallery pays. **Vouch** acts on it with nothing fitted on data: one running average per
 character, grown only where the page vouches for a crop. **MeCha**, a memory-augmented maintenance
