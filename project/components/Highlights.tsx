@@ -5,7 +5,7 @@ import { HIGHLIGHTS, QUOTE } from "../content";
 export function Highlights() {
   return (
     <Section id="findings" index={2} kicker="Key findings" alt
-      title="Where models fail" lead="Recognising a character is close to solved. Deciding which of your own matches to believe is not.">
+      title="Where models fail" lead="A small gallery nearly matches the full one. Growing it remains difficult.">
       <div data-fit-row="" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {HIGHLIGHTS.map((h, i) => (
           <article key={h.title} className="panel flex flex-col p-4">

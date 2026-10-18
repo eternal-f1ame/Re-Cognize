@@ -4,7 +4,7 @@ import { COMMIT_INTRO, COMMIT_OUTRO, COMMIT_TERMS } from "../content";
 export function CommitCondition() {
   return (
     <Section id="commit-condition" index={4} kicker="The commit condition" alt title="When a change to the gallery pays"
-      lead="The bottleneck is acceptance, not vision, and one comparison decides it.">
+      lead="The limit is what the gallery accepts, not the encoder.">
       <div>
         <div data-fit-row="" className="panel px-5 py-5 text-center md:px-8 md:py-6">
           <p className="mx-auto max-w-[80ch] text-[0.9688rem] leading-relaxed text-[var(--ink-2)]">{COMMIT_INTRO}</p>

@@ -1,4 +1,4 @@
-<h1 align="center">Re:Cognize: Open-Set Comic Character Re-Identification</h1>
+<h1 align="center">Re:Cognize - A Framework For Open-Set Comic Character Re-Identification</h1>
 
 <p align="center">
   <a href="https://sochastic.me">Aaditya Baranwal</a> · Madhav Kataria<sup>*</sup> · Yogesh S. Rawat · Shruti Vyas<br>
@@ -38,8 +38,8 @@ stream of character crops in reading order, answered against four galleries.
 | P3 | empty: the model organises the stream into characters itself (a diagnostic of emergence) |
 | P4 | the seeds, grown by the model as it reads |
 
-The paper finds that assembling a gallery is close to solved, while growing one is not. A
-gallery that adds the model's own matches gets worse, while the same growth with correct labels
+The paper finds that a small gallery nearly matches the full one, while growing it remains
+difficult. A gallery that adds the model's own matches gets worse, while the same growth with correct labels
 would add over twenty points of top-1 accuracy. One comparison decides whether a change to the
 gallery pays. **Vouch** acts on it with nothing fitted on data: one running average per
 character, grown only where the page vouches for a crop. A memory-augmented encoder serves as
@@ -123,7 +123,7 @@ python -m pytest tests                    # also builds the real backbones
 
 ```bibtex
 @inproceedings{baranwal2026recognize,
-  title     = {Re:Cognize: Open-Set Comic Character Re-Identification},
+  title     = {Re:Cognize - A Framework For Open-Set Comic Character Re-Identification},
   author    = {Baranwal, Aaditya and Kataria, Madhav and Rawat, Yogesh S. and Vyas, Shruti},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
   year      = {2026},

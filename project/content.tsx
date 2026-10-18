@@ -6,7 +6,7 @@ export const PAPER_URL = "https://arxiv.org/abs/2609.34032"; // arXiv link; the 
 export const CODE_URL = "https://github.com/eternal-f1ame/Re-Cognize";
 export const RESULTS_URL = "https://github.com/eternal-f1ame/Re-Cognize/releases/tag/neurips-2026";
 
-export const TITLE = "Re:Cognize: Open-Set Comic Character Re-Identification";
+export const TITLE = "Re:Cognize - A Framework For Open-Set Comic Character Re-Identification";
 export const DESCRIPTION =
   "Re:Cognize evaluates comic character re-identification as the story is read: four protocols on one query " +
   "stream, from closed-set retrieval to a cast the model must build and grow itself. NeurIPS 2026, Evaluations & " +
@@ -51,11 +51,11 @@ export const TEASER = {
   alt: "A reader's question, closed-set Re-ID with a gallery built in advance, and Re:Cognize's four protocols on one query stream",
   lead: "Recognising characters while the story is read.",
   caption:
-    "Left: a reader's question, such as where Takagi asks Mashiro, depends on who appears on which page. Centre: " +
-    "standard Re-ID matches each query against a gallery built before reading starts, so a new character finds no " +
-    "match. Right: Re:Cognize streams crops in reading order against four galleries: every character (P1), a few " +
-    "labelled examples of each (P2), none (P3), or a few that grow as it reads (P4). Vouch grows the gallery only " +
-    "where additions are right more often than the gallery on the queries they take over.",
+    "On the left, a reader's question such as where Takagi asks Mashiro depends on who appears on which page. In " +
+    "the centre, standard Re-ID matches each query against a gallery built before reading starts, so a new " +
+    "character finds no match. On the right, Re:Cognize streams crops in reading order against four galleries that " +
+    "hold every character (P1), a few labelled examples of each (P2), none (P3) or a few that grow as it reads (P4), " +
+    "and Vouch grows the gallery only where the page vouches for a crop.",
 };
 
 export const STATS = [
@@ -67,34 +67,35 @@ export const STATS = [
 
 // The abstract of the paper, split at its natural breaks; the last entry is its scope statement.
 export const ABSTRACT = [
-  "A manga reader meets a character on one page and knows them on sight a hundred pages later, without ever being " +
-    "handed a cast list. Re-identifying comic characters demands the same, open-set and sequential: pages arrive as " +
-    "a stream in reading order, new faces appear before anyone names them, and the cast is assembled as the story " +
-    "is read. Re:Cognize evaluates recognition as the story is read, not against a cast handed over in advance: four " +
-    "protocols on one query stream, from closed-set retrieval to a cast the model must build and grow itself.",
-  "The surprise is where models fail. Recognising is close to solved: one reference image per character already " +
-    "ranks as well as a gallery built in advance. Knowing what to believe is not: a model that adds its own matches " +
-    "makes its cast worse, while the same growth with correct labels would gain over twenty points of top-1 " +
-    "accuracy. The bottleneck is acceptance, not vision, and one comparison decides it: an addition pays exactly " +
-    "when it is right more often than the cast already was on the queries it takes over. The comparison has nothing " +
-    "to fit, and measured on half of a new corpus it calls the other half correctly.",
-  "Vouch puts it to work with nothing fitted on data: a cast sheet of one running average per character, grown " +
-    "only where the page itself vouches for a crop. It recovers a third to two thirds of what perfect labels would, " +
-    "depending on whether the cast starts from random examples or from first appearances. Re:Cognize measures " +
-    "whether a model can read along; Vouch builds a cast that does.",
-  "Our claims are on identity maintenance, recognising characters already met; the emergence of new ones is " +
-    "measured as a diagnostic under a fixed reference rule, and we propose no method for it.",
+  "Comics and manga tell stories through characters whose appearances change from panel to panel, yet readers " +
+    "recognise them hundreds of pages later without ever consulting a cast list. Character re-identification models " +
+    "rarely face the same challenge: existing evaluations give them a fixed set of identities before the story " +
+    "begins. Re:Cognize instead asks models to recognise characters as the story unfolds and learn who is who along " +
+    "the way.",
+  "Across three manga corpora, we evaluate five Re-ID backbones and MeCha, a memory-augmented baseline we " +
+    "introduce, and find that the central difficulty lies somewhere unexpected. A gallery with one example of each " +
+    "character nearly matches the full one, but growing it remains difficult. When models grow it from their own " +
+    "predictions, their performance deteriorates, even though correct identity labels would improve it by over " +
+    "twenty points. This raises a simple question: when should a model trust its own match?",
+  "We derive a single comparison that determines when gallery updates improve recognition and use it to design " +
+    "Vouch, which updates its memory only when the page provides supporting evidence. Without fitting additional " +
+    "parameters, Vouch recovers between one-third and two-thirds of the improvement available from perfect labels. " +
+    "Re:Cognize measures whether a model can recognise characters as it reads; Vouch shows how to remember them " +
+    "reliably.",
+  "We focus our methodological claims on identity maintenance for previously encountered characters, while " +
+    "separately evaluating new-character emergence as a diagnostic under a fixed reference rule to distinguish " +
+    "recognition from discovery.",
 ];
 
 export const HIGHLIGHTS = [
   {
     icon: "eye",
-    title: "Recognising is close to solved",
+    title: "A small gallery nearly matches the full one",
     text: "One reference image per character already ranks as well as a gallery built in advance.",
   },
   {
     icon: "alert",
-    title: "Knowing what to believe is not",
+    title: "Growing it remains difficult",
     text:
       "A model that adds its own matches makes its cast worse, while the same growth with correct labels would " +
       "gain over twenty points of top-1 accuracy.",
@@ -104,18 +105,19 @@ export const HIGHLIGHTS = [
     title: "One comparison decides it",
     text:
       "An addition pays exactly when it is right more often than the cast already was on the queries it takes " +
-      "over. The comparison has nothing to fit, and measured on half of a new corpus it calls the other half correctly.",
+      "over. The comparison has nothing to fit, and measured on half of a new corpus it calls the other half correctly " +
+      "wherever the change matters.",
   },
   {
     icon: "cast",
-    title: "Vouch reads along",
+    title: "Vouch narrows the gap",
     text:
       "One running average per character, grown only where the page itself vouches for a crop, recovers a third " +
       "to two thirds of what perfect labels would.",
   },
 ];
 
-export const QUOTE = "Re:Cognize measures whether a model can read along; Vouch builds a cast that does.";
+export const QUOTE = "Re:Cognize measures the gap. Vouch shows how to narrow it.";
 
 export const PROTOCOLS_FIGURE: { src: string; width: number; height: number; alt: string; caption: ReactNode } = {
   src: "/figures/protocols.png",
@@ -294,7 +296,7 @@ export const RESOURCES = [
 ];
 
 export const BIBTEX = `@inproceedings{baranwal2026recognize,
-  title     = {Re:Cognize: Open-Set Comic Character Re-Identification},
+  title     = {Re:Cognize - A Framework For Open-Set Comic Character Re-Identification},
   author    = {Baranwal, Aaditya and Kataria, Madhav and Rawat, Yogesh S. and Vyas, Shruti},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
   year      = {2026},

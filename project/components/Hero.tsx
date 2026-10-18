@@ -33,7 +33,7 @@ export function Hero() {
               Re<span className="text-[var(--orange)]">:</span>Cognize
             </h1>
             <p className="mt-2 font-display text-[clamp(1.0625rem,1.55vw,1.5rem)] font-semibold leading-snug text-[var(--ink-2)]">
-              Open-Set Comic Character <span className="whitespace-nowrap">Re-Identification</span>
+              A Framework For Open-Set Comic Character <span className="whitespace-nowrap">Re-Identification</span>
             </p>
 
             <p className="mt-3 text-[0.9688rem] font-semibold sm:text-base">

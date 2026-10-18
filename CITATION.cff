@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code, please cite the paper."
-title: "Re:Cognize: Open-Set Comic Character Re-Identification"
+title: "Re:Cognize - A Framework For Open-Set Comic Character Re-Identification"
 authors:
   - family-names: Baranwal
     given-names: Aaditya
@@ -23,7 +23,7 @@ identifiers:
     description: "The paper on arXiv"
 preferred-citation:
   type: conference-paper
-  title: "Re:Cognize: Open-Set Comic Character Re-Identification"
+  title: "Re:Cognize - A Framework For Open-Set Comic Character Re-Identification"
   authors:
     - family-names: Baranwal
       given-names: Aaditya

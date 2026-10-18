@@ -12,7 +12,7 @@ const BINDING_FIT: Fit = { reserve: "15rem", reserveLg: "3rem" };
 
 export function Vouch() {
   return (
-    <Section id="vouch" index={5} kicker="Vouch" title="A cast that reads along"
+    <Section id="vouch" index={5} kicker="Vouch" title="Grow only where the page vouches"
       lead="A cast sheet of one running average per character, grown only where the page itself vouches for a crop, with nothing fitted on data.">
       <VouchReplay />
 
