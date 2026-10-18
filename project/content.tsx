@@ -73,9 +73,9 @@ export const ABSTRACT = [
     "begins. Re:Cognize instead asks models to recognise characters as the story unfolds and learn who is who along " +
     "the way.",
   "Across three manga corpora, we evaluate five Re-ID backbones and MeCha, a memory-augmented baseline we " +
-    "introduce, and find that the central difficulty lies somewhere unexpected. A gallery with one example of each " +
-    "character nearly matches the full one, but growing it remains difficult. When models grow it from their own " +
-    "predictions, their performance deteriorates, even though correct identity labels would improve it by over " +
+    "introduce, and find that the central difficulty lies somewhere unexpected. Recognising familiar characters " +
+    "is within reach. Knowing which matches to trust is not. When models build a gallery and grow it from their " +
+    "own predictions, their performance deteriorates, even though correct identity labels would improve it by over " +
     "twenty points. This raises a simple question: when should a model trust its own match?",
   "We derive a single comparison that determines when gallery updates improve recognition and use it to design " +
     "Vouch, which updates its memory only when the page provides supporting evidence. Without fitting additional " +
@@ -91,14 +91,14 @@ export const HIGHLIGHTS = [
   {
     icon: "eye",
     title: "A small gallery nearly matches the full one",
-    text: "One reference image per character already ranks as well as a gallery built in advance.",
+    text: "A single reference image per character already matches closed-set retrieval.",
   },
   {
     icon: "alert",
     title: "Growing it remains difficult",
     text:
-      "A model that adds its own matches makes its cast worse, while the same growth with correct labels would " +
-      "gain over twenty points of top-1 accuracy.",
+      "Growing a gallery from the model's own matches makes it worse on every backbone, while correct labels " +
+      "would add over twenty points.",
   },
   {
     icon: "scale",
@@ -128,7 +128,7 @@ export const PROTOCOLS_FIGURE: { src: string; width: number; height: number; alt
     <>
       All four answer one stream of query crops in reading order and differ in the gallery and whether it may
       change. <i>k</i> is the number of seed crops per character, <i>&tau;</i><sub>nov</sub> the novelty threshold of
-      P3 and <i>B</i><sub>max</sub> the cap on crops P4 adds per character; frames are coloured by character and
+      P3 and <i>B</i><sub>max</sub> the cap on crops P4 adds per character. Frames are coloured by character and
       dashed where the model added the crop.
     </>
   ),
@@ -202,9 +202,10 @@ export const VOUCH_FIGURES = [
 ];
 
 export const VOUCH_CAPTION =
-  "on Re:Zero crops from Re:Verse, with Rom as identity A. Top: the three changes. A page names a character when " +
-  "one of its crops is already committed to it, and commitment then adds that crop's page-group sibling. Bottom: " +
-  "over six pages the cast sheet is updated only on the four that name Rom; elsewhere the rule abstains.";
+  "on Re:Zero crops from Re:Verse, with Rom as identity A. The top row shows the three changes. A page names a " +
+  "character when one of its crops is already committed to it, and commitment then adds that crop's page-group " +
+  "sibling. In the bottom row, over six pages the cast sheet is updated only on the four that name Rom, and " +
+  "elsewhere the rule abstains.";
 
 export const VOUCH_CHANGES = [
   {
@@ -235,33 +236,38 @@ export const BINDING_FIGURES = [
   { src: "/figures/vouch_commit_flow.png", width: 2400, height: 600, alt: "Pricing the binder: crops are committed when the commit condition predicts a gain" },
 ];
 
-export const BINDING_CAPTION =
-  "Top, on Re:Verse's Re:Zero annotations: (a) a page's crops are grouped above one similarity threshold, (b) page " +
-  "groups merge in reading order into the best earlier match above a second, or start new ones, and (c) a group's " +
-  "first seed names it. Bottom: any frozen encoder can bind, with threshold τ; its crops are committed when the " +
-  "commit condition predicts a positive Δ, and τ is chosen by that prediction, never by the measured gain.";
+export const BINDING_CAPTION: ReactNode = (
+  <>
+    The top row uses Re:Verse&rsquo;s Re:Zero annotations. (a) A page&rsquo;s crops are grouped above one similarity
+    threshold, (b) page groups merge in reading order into the best earlier match above a second or start new ones,
+    and (c) a group&rsquo;s first seed names it. In the bottom row any frozen encoder binds with threshold &tau;, and
+    its crops are committed when the commit condition predicts a positive &Delta;, with <i>p</i><sub>eff</sub> the
+    additions&rsquo; precision on the queries they capture and <i>a</i><sup>+</sup> the static gallery&rsquo;s accuracy
+    there. That prediction, never the measured gain, chooses &tau;.
+  </>
+);
 
 export const HEADROOM_PANELS = [
   { src: "/figures/ceiling_recovery.svg", label: "a", caption: "What one seed recovers, by metric" },
-  { src: "/figures/p4_closes_gap.svg", label: "b", caption: "What correct growth adds, k = 1" },
+  { src: "/figures/p4_closes_gap.svg", label: "b", caption: "What correct growth would add, k = 1" },
   { src: "/figures/adaptation.svg", label: "c", caption: "Encoder-side adaptation" },
-  { src: "/figures/one_breakeven.svg", label: "d", caption: "Every change to the gallery, k = 5" },
+  { src: "/figures/one_breakeven.svg", label: "d", caption: "Every gallery operation at k = 5" },
 ];
 
 export const HEADROOM_CAPTION =
   "(a) One seed per character recovers the closed-set mAP but only part of its Rank-1. (b) Growth by the model's " +
-  "own top-1 matches stays below a static gallery, while correct labels would add over twenty points (labels: " +
-  "oracle minus static). (a, b): memory-block configuration, one random seed per character, three training runs. " +
-  "(c) Encoder-side adaptation helps most on the backbones weakest in this domain. (d) Each point is one change to " +
-  "the gallery on one backbone and corpus: adding under the page constraint, adding by top-1 match, or restricting " +
-  "the candidate characters. The stronger the gallery already is, the less any change adds, and the commit " +
-  "condition predicts which points fall below zero.";
+  "own top-1 matches stays below a static gallery, while correct labels would lift it far above (labels give " +
+  "oracle minus static). Panels (a) and (b) use MeCha with one random seed per character over " +
+  "three training runs. (c) Encoder-side adaptation helps the backbones weakest in this domain most. (d) Each point " +
+  "is one change to the gallery on one backbone and corpus, whether adding under the page constraint, adding by " +
+  "top-1 match or restricting the candidate characters. The stronger the gallery already is, the less any change " +
+  "adds, and the commit condition predicts which points fall below zero.";
 
 export const RESOURCES = [
   {
     icon: "code",
     title: "Code",
-    text: "The evaluation harness with all four protocols, Vouch, the memory-block baseline, and the analyses behind every number in the paper.",
+    text: "The evaluation harness with all four protocols, Vouch, the MeCha baseline, and the analyses behind every number in the paper.",
     href: CODE_URL,
     label: "github.com/eternal-f1ame/Re-Cognize",
   },

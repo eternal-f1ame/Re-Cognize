@@ -42,8 +42,8 @@ The paper finds that a small gallery nearly matches the full one, while growing 
 difficult. A gallery that adds the model's own matches gets worse, while the same growth with correct labels
 would add over twenty points of top-1 accuracy. One comparison decides whether a change to the
 gallery pays. **Vouch** acts on it with nothing fitted on data: one running average per
-character, grown only where the page vouches for a crop. A memory-augmented encoder serves as
-the maintenance baseline.
+character, grown only where the page vouches for a crop. **MeCha**, a memory-augmented maintenance
+baseline, gives any frozen backbone a working and an episodic memory of each character.
 
 <p align="center">
   <img src="docs/media/vouch-loop.gif" width="95%" alt="The same eight crops against growth by top-1 and against Vouch">
@@ -56,7 +56,7 @@ the maintenance baseline.
   <img src="project/public/figures/vouch_schematic_b.png" width="95%" alt="Over six pages the cast sheet is updated only on the pages that name the character">
 </p>
 
-This repository holds the evaluation harness, the Vouch gallery, the memory-block baseline and
+This repository holds the evaluation harness, the Vouch gallery, the MeCha baseline and
 its trainer, the analysis scripts behind every number in the paper, and the generators of its
 tables and figures.
 
