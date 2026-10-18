@@ -25,6 +25,11 @@
 }
 
 @layer base {
+  /* Headings that must wrap split into even lines instead of leaving one word behind. */
+  h1, h2, h3, .text-balance-subtitle {
+    text-wrap: balance;
+  }
+
   html {
     /* 15px on phones and small laptops, 16px around 1440x800, up to 19px on large monitors */
     font-size: clamp(15px, calc(0.35vw + 0.5vh + 7px), 19px);
