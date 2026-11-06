@@ -70,8 +70,8 @@ export const ABSTRACT = [
   "Comics and manga tell stories through characters whose appearances change from panel to panel, yet readers " +
     "recognise them hundreds of pages later without ever consulting a cast list. Character re-identification models " +
     "rarely face the same challenge: existing evaluations give them a fixed set of identities before the story " +
-    "begins. Re:Cognize instead asks models to recognise characters as the story unfolds and learn who is who along " +
-    "the way.",
+    "begins. Re:Cognize instead asks models to recognise characters as the story unfolds, inferring the cast " +
+    "incrementally.",
   "Across three manga corpora, we evaluate five Re-ID backbones and MeCha, a memory-augmented baseline we " +
     "introduce, and find that the central difficulty lies somewhere unexpected. Recognising familiar characters " +
     "is within reach. Knowing which matches to trust is not. When models build a gallery and grow it from their " +
@@ -80,8 +80,8 @@ export const ABSTRACT = [
   "We derive a single comparison that determines when gallery updates improve recognition and use it to design " +
     "Vouch, which updates its memory only when the page provides supporting evidence. Without fitting additional " +
     "parameters, Vouch recovers between one-third and two-thirds of the improvement available from perfect labels. " +
-    "Re:Cognize measures whether a model can recognise characters as it reads; Vouch shows how to remember them " +
-    "reliably.",
+    "Re:Cognize measures whether a model can recognise characters as it reads; Vouch shows how to maintain their " +
+    "identities reliably.",
   "We focus our methodological claims on identity maintenance for previously encountered characters, while " +
     "separately evaluating new-character emergence as a diagnostic under a fixed reference rule to distinguish " +
     "recognition from discovery.",
@@ -97,16 +97,16 @@ export const HIGHLIGHTS = [
     icon: "alert",
     title: "Knowing which matches to trust is not",
     text:
-      "Growing a gallery from the model's own matches makes it worse on every backbone, while correct labels " +
+      "Growing a gallery from the model's own matches degrades it on every backbone, whereas correct labels " +
       "would add over twenty points.",
   },
   {
     icon: "scale",
     title: "One comparison decides it",
     text:
-      "An addition pays exactly when it is right more often than the cast already was on the queries it takes " +
-      "over. The comparison has nothing to fit, and measured on half of a new corpus it calls the other half correctly " +
-      "wherever the change matters.",
+      "An addition improves recognition exactly when it is correct more often than the gallery already was on the " +
+      "queries it captures. The comparison has no fitted parameters, and measured on half of a new corpus it makes the " +
+      "correct decision for the other half wherever the change matters.",
   },
   {
     icon: "cast",
@@ -149,7 +149,7 @@ export const PROTOCOLS = [
     name: "Seeded static gallery",
     text:
       "k labelled crops per character, drawn at random (Seq-R) or as the character's first k appearances " +
-      "(Seq-T), as a reader meets them; every other crop is a query.",
+      "(Seq-T); every other crop is a query.",
   },
   {
     id: "P3",
@@ -157,15 +157,15 @@ export const PROTOCOLS = [
     name: "Online clustering",
     text:
       "Crops arrive unlabelled into an empty gallery and join the nearest cluster above a novelty threshold or " +
-      "open a new one. A diagnostic of emergence: one fixed threshold compares every representation.",
+      "initialise a new one. A diagnostic of emergence: one fixed threshold compares every representation.",
   },
   {
     id: "P4",
     tone: "orange",
     name: "Seeded gallery that grows",
     text:
-      "P2's gallery, but in reading order each query is added under its top-1 match. Static, predicted and oracle " +
-      "policies separate what growth gives, scored by identity Rank-1.",
+      "P2's gallery, but in reading order each query is added with its top-1 label. Static, predicted and oracle " +
+      "policies isolate the contribution of growth, scored by identity Rank-1.",
   },
 ];
 
@@ -178,7 +178,7 @@ export const COMMIT_TERMS: { symbol: ReactNode; name: string; text: string }[] =
   {
     symbol: <><i>p</i><sub>eff</sub></>,
     name: "Precision where it acts",
-    text: "The share of captured queries whose capturing entry carries their own identity.",
+    text: "The share of captured queries whose capturing entry is labelled with their own identity.",
   },
   {
     symbol: <><i>a</i><sup>+</sup></>,
@@ -189,22 +189,22 @@ export const COMMIT_TERMS: { symbol: ReactNode; name: string; text: string }[] =
 
 export const COMMIT_OUTRO: ReactNode = (
   <>
-    So a change pays exactly when <i>p</i><sub>eff</sub> &gt; <i>a</i><sup>+</sup>: when its additions are right
-    more often than the gallery already was on the queries they take over, not on average. A crop filed under the
-    right character can still take over other characters&rsquo; queries, which is why neither term is the
+    So a change improves accuracy exactly when <i>p</i><sub>eff</sub> &gt; <i>a</i><sup>+</sup>: when its additions are
+    correct more often than the gallery already was on the queries they capture, not on average. A crop assigned to the
+    correct character can still capture other characters&rsquo; queries, which is why neither term is the
     intuitive one.
   </>
 );
 
 export const VOUCH_FIGURES = [
   { src: "/figures/vouch_schematic_a.png", width: 2400, height: 800, alt: "Vouch: cast sheet, commitment and seed expansion" },
-  { src: "/figures/vouch_schematic_b.png", width: 2400, height: 600, alt: "Over six pages the cast sheet is updated only on the pages that name the character" },
+  { src: "/figures/vouch_schematic_b.png", width: 2400, height: 600, alt: "Over six pages the cast sheet is updated only on the pages that vouch for the character" },
 ];
 
 export const VOUCH_CAPTION =
-  "on Re:Zero crops from Re:Verse, with Rom as identity A. The top row shows the three changes. A page names a " +
+  "on Re:Zero crops from Re:Verse, with Rom as identity A. The top row shows the three changes. A page vouches for a " +
   "character when one of its crops is already committed to it, and commitment then adds that crop's page-group " +
-  "sibling. In the bottom row, over six pages the cast sheet is updated only on the four that name Rom, and " +
+  "sibling. In the bottom row, over six pages the cast sheet is updated only on the four that vouch for Rom, and " +
   "elsewhere the rule abstains.";
 
 export const VOUCH_CHANGES = [
@@ -212,8 +212,8 @@ export const VOUCH_CHANGES = [
     label: "a",
     title: "A cast sheet, not a bag of crops",
     text:
-      "Each character is one ℓ2-normalised average of the crops filed under it, so a new crop refines its " +
-      "character's entry instead of becoming a rival entry that takes over other characters' queries.",
+      "Each character is one ℓ2-normalised average of the crops assigned to it, so a new crop refines its " +
+      "character's entry instead of becoming a rival entry that captures other characters' queries.",
   },
   {
     label: "b",
@@ -232,7 +232,7 @@ export const VOUCH_CHANGES = [
 ];
 
 export const BINDING_FIGURES = [
-  { src: "/figures/vouch_binding.png", width: 2400, height: 800, alt: "Binding: page groups merged in reading order and named by their first seed" },
+  { src: "/figures/vouch_binding.png", width: 2400, height: 800, alt: "Binding: page groups merged in reading order and labelled by their first seed" },
   { src: "/figures/vouch_commit_flow.png", width: 2400, height: 600, alt: "Pricing the binder: crops are committed when the commit condition predicts a gain" },
 ];
 
@@ -240,7 +240,7 @@ export const BINDING_CAPTION: ReactNode = (
   <>
     The top row uses Re:Verse&rsquo;s Re:Zero annotations. (a) A page&rsquo;s crops are grouped above one similarity
     threshold, (b) page groups merge in reading order into the best earlier match above a second or start new ones,
-    and (c) a group&rsquo;s first seed names it. In the bottom row any frozen encoder binds with threshold &tau;, and
+    and (c) a group&rsquo;s first seed labels it. In the bottom row any frozen encoder binds with threshold &tau;, and
     its crops are committed when the commit condition predicts a positive &Delta;, with <i>p</i><sub>eff</sub> the
     additions&rsquo; precision on the queries they capture and <i>a</i><sup>+</sup> the static gallery&rsquo;s accuracy
     there. That prediction, never the measured gain, chooses &tau;.
@@ -256,9 +256,9 @@ export const HEADROOM_PANELS = [
 
 export const HEADROOM_CAPTION =
   "(a) One seed per character recovers the closed-set mAP but only part of its Rank-1. (b) Growth by the model's " +
-  "own top-1 matches stays below a static gallery, while correct labels would lift it far above (labels give " +
+  "own top-1 matches remains below a static gallery, whereas correct labels would raise it far above (labels give " +
   "oracle minus static). Panels (a) and (b) use MeCha with one random seed per character over " +
-  "three training runs. (c) Encoder-side adaptation helps the backbones weakest in this domain most. (d) Each point " +
+  "three training runs. (c) Encoder-side adaptation benefits most the backbones weakest in this domain. (d) Each point " +
   "is one change to the gallery on one backbone and corpus, whether adding under the page constraint, adding by " +
   "top-1 match or restricting the candidate characters. The stronger the gallery already is, the less any change " +
   "adds, and the commit condition predicts which points fall below zero.";

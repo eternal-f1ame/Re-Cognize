@@ -16,7 +16,7 @@ export function Results() {
 
   return (
     <Section id="results" index={6} kicker="Results" alt title="What the protocols measure, and where the headroom is"
-      lead="Five backbones, two corpora: one seed recovers the closed-set mAP, correct growth would add over twenty points, and the commit condition says which changes pay.">
+      lead="Five backbones, two corpora: one seed recovers the closed-set mAP, correct growth would add over twenty points, and the commit condition predicts which changes improve recognition.">
       {/* 2:1 plots. Two by two the grid is about half as tall as it is wide plus the card chrome, and shares
           the screen with the section header; four in a row (xl) it is an eighth as tall, so it takes the
           full width. */}

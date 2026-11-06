@@ -146,7 +146,7 @@ export function VouchReplay() {
             drawn={a >= MATCH} visible={a < FILE} color={a >= VERDICT && !ok ? WRONG : INK} />,
           <Badge key={`badge-${cur}`} x={SLOT.x + TW * SLOT.s - 3} y={SLOT.y + 3} ok={ok} show={a >= VERDICT && a < FILE} />,
         );
-        const msg = a >= FILE ? (ok ? `filed under ${name(m.pred)}` : `filed under ${name(m.pred)}, wrongly`)
+        const msg = a >= FILE ? (ok ? `assigned to ${name(m.pred)}` : `assigned to ${name(m.pred)}, incorrectly`)
           : a >= VERDICT ? (ok ? `matched ${name(m.pred)}` : `matched ${name(m.pred)}, not ${name(s.truth)}`)
           : `top-1 similarity ${m.sim.toFixed(2)}`;
         if (a >= MATCH) {
@@ -207,8 +207,8 @@ export function VouchReplay() {
     const filedAs = (j: number) => (p === "top1" ? steps[j].p4.pred : steps[j].vouch.commit);
     const right = scored.filter((j) => pred(j) === truth(j)).length;
     const wrong = added.filter((j) => filedAs(j) !== truth(j)).length;
-    let score = scored.length ? `${right} of ${scored.length} right` : "–";
-    if (added.length) score += ` · ${added.length} added, ${wrong} wrong`;
+    let score = scored.length ? `${right} of ${scored.length} correct` : "–";
+    if (added.length) score += ` · ${added.length} added, ${wrong} incorrect`;
 
     return (
       <>
@@ -235,7 +235,7 @@ export function VouchReplay() {
       fit={FIT}
       stage={(
         <svg viewBox={`0 0 ${L.w} ${L.h}`} className="rp-svg block h-auto w-full" role="img"
-          aria-label="The same eight crops against two ways of growing the gallery: filing every query under its top-1 match ends at five of eight with three wrong additions, Vouch adds only the two crops their page ties to a seed and ends at seven of eight.">
+          aria-label="The same eight crops against two ways of growing the gallery: assigning every query to its top-1 match ends at five of eight with three incorrect additions, Vouch adds only the two crops that their page links to a seed and ends at seven of eight.">
           <ClipDef id={clip} />
           <g key={`${epoch}-${isNarrow ? tab : "wide"}`} className="rp-stage" style={{ opacity: fading ? 0 : 1 }}>
             <StreamStrip g={L.stream} clip={clip} clock={clock} at={at} />
@@ -255,10 +255,10 @@ export function VouchReplay() {
       lead="Growth by top-1 against Vouch, on the same stream."
       caption={(
         <>
-          Both start from one seed per character. P4 files every query under its top-1 match, so the page-29 mistake
-          stays in the gallery and is matched again. Vouch keeps one averaged entry per character and adds a crop only
-          when MagiV2&rsquo;s page grouping ties it to a crop already committed, here the seeds on pages 17 and 50;
-          everywhere else it holds.
+          Both start from one seed per character. P4 assigns every query to its top-1 match, so the page-29 error
+          remains in the gallery and is matched again. Vouch maintains one averaged entry per character and adds a crop only
+          when MagiV2&rsquo;s page grouping links it to a crop already committed, here the seeds on pages 17 and 50;
+          everywhere else it abstains.
         </>
       )}
     />

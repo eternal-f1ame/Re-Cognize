@@ -17,8 +17,8 @@
   <img src="project/public/figures/teaser.png" width="95%" alt="A reader's question, closed-set Re-ID with a gallery built in advance, and Re:Cognize's four protocols on one query stream">
 </p>
 
-Re:Cognize evaluates comic character re-identification the way a reader meets characters: one
-stream of character crops in reading order, answered against four galleries.
+Re:Cognize evaluates comic character re-identification in the order a reader encounters characters:
+one stream of character crops in reading order, evaluated against four galleries.
 
 <p align="center">
   <img src="project/public/figures/protocols.png" width="95%" alt="The four protocols answer one query stream in reading order and differ in the gallery and whether it may change">
@@ -27,8 +27,8 @@ stream of character crops in reading order, answered against four galleries.
 <p align="center">
   <img src="docs/media/protocols-loop.gif" width="95%" alt="Eight crops of Bakuman chapter 1 answered by the four protocols in reading order">
   <br><sub>MagiV2's own decisions on eight crops of Bakuman chapter 1, replayed under each protocol. One Mashiro crop is
-  closer to Azuki's seed: P1 still gets it right, P2 does not, and P4 files it under Azuki, where two later Mashiro crops
-  match it.</sub>
+  closer to Azuki's seed: P1 still identifies it correctly, P2 does not, and P4 assigns it to Azuki, where two later Mashiro
+  crops match it.</sub>
 </p>
 
 | Protocol | Gallery |
@@ -39,21 +39,21 @@ stream of character crops in reading order, answered against four galleries.
 | P4 | the seeds, grown by the model as it reads |
 
 The paper finds that recognising familiar characters is within reach, while knowing which
-matches to trust is not. A gallery that adds the model's own matches gets worse, while the same growth with correct labels
+matches to trust is not. A gallery that adds the model's own matches degrades, whereas the same growth with correct labels
 would add over twenty points of top-1 accuracy. One comparison decides whether a change to the
-gallery pays. **Vouch** acts on it with nothing fitted on data: one running average per
+gallery improves recognition. **Vouch** acts on it with no parameters fitted to data: one running average per
 character, grown only where the page vouches for a crop. **MeCha**, a memory-augmented maintenance
-baseline, gives any frozen backbone a working and an episodic memory of each character.
+baseline, equips any frozen backbone with a working and an episodic memory of each character.
 
 <p align="center">
   <img src="docs/media/vouch-loop.gif" width="95%" alt="The same eight crops against growth by top-1 and against Vouch">
   <br><sub>The same stream against two ways of growing the gallery. Growth by top-1 ends at five of eight with three wrong
-  additions; Vouch adds only the two crops their page ties to a seed and ends at seven of eight.</sub>
+  additions; Vouch adds only the two crops that their page links to a seed and ends at seven of eight.</sub>
 </p>
 
 <p align="center">
-  <img src="project/public/figures/vouch_schematic_a.png" width="95%" alt="Vouch: a cast sheet of one average per character, commitment only where the page already names the character, and seed expansion">
-  <img src="project/public/figures/vouch_schematic_b.png" width="95%" alt="Over six pages the cast sheet is updated only on the pages that name the character">
+  <img src="project/public/figures/vouch_schematic_a.png" width="95%" alt="Vouch: a cast sheet of one average per character, commitment only where the page already vouches for the character, and seed expansion">
+  <img src="project/public/figures/vouch_schematic_b.png" width="95%" alt="Over six pages the cast sheet is updated only on the pages that vouch for the character">
 </p>
 
 This repository holds the evaluation harness, the Vouch gallery, the MeCha baseline and

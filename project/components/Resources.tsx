@@ -6,7 +6,7 @@ import { RESOURCES } from "../content";
 export function Resources() {
   const [code, results, ...corpora] = RESOURCES;
   return (
-    <Section id="resources" index={7} kicker="Code & data" title="Rerun it, or regenerate every table"
+    <Section id="resources" index={7} kicker="Code & data" title="Reproduce every result, or regenerate every table"
       lead="The harness, the per-tuple results and the three corpora. With the results archive, every table and figure of the paper regenerates without a GPU.">
       <div data-fit-row="" className="grid gap-4 md:grid-cols-2">
         {[code, results].map((r, i) => (

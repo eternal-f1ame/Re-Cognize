@@ -205,7 +205,7 @@ export function ProtocolReplay() {
         );
         const ok = m.pred === s.truth;
         let msg = a >= VERDICT ? (ok ? `matched ${name(m.pred)}` : `matched ${name(m.pred)}, not ${name(s.truth)}`) : `top-1 similarity ${m.sim.toFixed(2)}`;
-        if (p === "p4" && a >= FILE) msg = ok ? `filed under ${name(m.pred)}` : `filed under ${name(m.pred)}, wrongly`;
+        if (p === "p4" && a >= FILE) msg = ok ? `assigned to ${name(m.pred)}` : `assigned to ${name(m.pred)}, incorrectly`;
         line = a >= MATCH ? <text x={PW / 2} y={TEXT_Y} textAnchor="middle" fontSize={11.5} fontWeight={a >= VERDICT ? 700 : 500}
           fill={a >= VERDICT && !ok ? WRONG : INK}>{msg}</text> : null;
       } else {
@@ -215,7 +215,7 @@ export function ProtocolReplay() {
           els.push(<Link key={`link-${cur}`} x1={from.x} y1={from.y} x2={box.x - 2} y2={box.y + CL.h / 2} drawn={a >= MATCH} visible={a < FILE} />);
         }
         const cmp = d.best === null ? "nothing to compare with yet" : `closest cluster ${d.best.toFixed(2)} ${d.best >= R.tau ? "≥" : "<"} ${R.tau.toFixed(2)}`;
-        const msg = a >= VERDICT ? (d.open ? "opens a new cluster" : `joins cluster ${d.cluster + 1}`) : cmp;
+        const msg = a >= VERDICT ? (d.open ? "starts a new cluster" : `joins cluster ${d.cluster + 1}`) : cmp;
         line = a >= MATCH ? <text x={PW / 2} y={TEXT_Y} textAnchor="middle" fontSize={11.5} fontWeight={a >= VERDICT ? 700 : 500}
           fill={INK}>{msg}</text> : null;
       }
@@ -230,10 +230,10 @@ export function ProtocolReplay() {
       score = scored.length ? `${open} cluster${open === 1 ? "" : "s"} · ${chars} character${chars === 1 ? "" : "s"}` : "–";
     } else {
       const right = scored.filter((j) => steps[j][p].pred === truth(j)).length;
-      score = scored.length ? `${right} of ${scored.length} right` : "–";
+      score = scored.length ? `${right} of ${scored.length} correct` : "–";
       if (p === "p4") {
         const wrong = R.stream.filter((_, j) => at(j) >= FILE && steps[j].p4.pred !== truth(j)).length;
-        if (wrong) score += ` · ${wrong} wrong added`;
+        if (wrong) score += ` · ${wrong} added incorrectly`;
       }
     }
 
@@ -263,7 +263,7 @@ export function ProtocolReplay() {
         fit={FIT}
         stage={(
           <svg viewBox={`0 0 ${L.w} ${L.h}`} className="rp-svg block h-auto w-full" role="img"
-            aria-label="Eight crops of Bakuman chapter 1 answered by the four protocols in reading order: P1 gets all eight right, P2 seven, P4 five after filing one mistake under the wrong character, and P3 opens three clusters.">
+            aria-label="Eight crops of Bakuman chapter 1 answered by the four protocols in reading order: P1 identifies all eight correctly, P2 seven, P4 five after assigning one crop to the wrong character, and P3 starts three clusters.">
             <ClipDef id={clip} />
             <g key={`${epoch}-${isNarrow ? tab : "wide"}`} className="rp-stage" style={{ opacity: fading ? 0 : 1 }}>
               <StreamStrip g={L.stream} clip={clip} clock={clock} at={at} />
@@ -290,7 +290,7 @@ export function ProtocolReplay() {
           <>
             MagiV2&rsquo;s own decisions (its released encoder) on eight crops of Bakuman chapter 1, against the
             galleries of the paper&rsquo;s protocols figure; the protocols run on whole chapters. The page-29 Mashiro crop
-            sits closer to Azuki&rsquo;s seed: P1 still gets it right, P2 does not, and P4 files it under Azuki, where two
+            lies closer to Azuki&rsquo;s seed: P1 still identifies it correctly, P2 does not, and P4 assigns it to Azuki, where two
             later Mashiro crops match it.
           </>
         )}

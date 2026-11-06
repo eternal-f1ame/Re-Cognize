@@ -5,7 +5,7 @@ export function Abstract() {
   const [first, ...rest] = ABSTRACT.slice(0, -1);
   const scope = ABSTRACT[ABSTRACT.length - 1];
   return (
-    <Section id="abstract" index={1} kicker="Abstract" title="Reading along, not matching against a cast list">
+    <Section id="abstract" index={1} kicker="Abstract" title="Recognition as the story is read">
       {/* on wide screens the text runs in two columns of readable length beside the scope note */}
       <div data-fit-row="" className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:gap-[2.5vw]">
         <div className="text-[0.9688rem] leading-[1.7] text-[var(--ink-2)] lg:columns-2 lg:gap-[2.5vw] [&>p+p]:mt-3.5">
